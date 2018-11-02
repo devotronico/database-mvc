@@ -1,0 +1,44 @@
+body{
+    height: auto;
+    background-color: #999;
+}
+
+.container{
+    min-height: 100%;
+    padding:0 0 20px 0;
+    background-color: silver;
+}
+
+main{
+    min-height: 100%;
+    padding:50px;
+  
+}
+
+.navigation{
+    height: 100px;
+    padding: 0 100px;
+    background-color: gold;
+}
+
+.navigation__list {
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+  
+}
+
+.navigation__item {
+    font-size: 28px;
+}
+
+.form-btn {
+    min-width: 60px;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 1.5rem;
+}
+
+

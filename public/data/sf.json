@@ -1,0 +1,147 @@
+[
+    {
+        "name": "Balrog",
+        "gender": "male",
+        "country": "Spain",
+        "birth": "27-01-1967",
+        "move": ["Rolling Crystal Claw", "Flying Barcellona Attack", "Izuna Drop"],
+        "super": "Flying Barcellona Special",
+        "img": "balrog.png"
+    },
+    {
+        "name": "Blanka",
+        "gender": "male",
+        "country": "Brasil",
+        "birth": "12-02-1966",
+        "move": ["Electric Thunder", "Rolling Attack", "Backstep Rolling"],
+        "super": "Ground Shave Rolling",
+        "img": "blanka.png"
+    },
+    {
+        "name": "Cammy",
+        "gender": "female",
+        "country": "Regno Unito",
+        "birth": "06-01-1974",
+        "move": ["Spiral Arrow", "Cannon Spike", "Spinning Knuckle"],
+        "super": "supermove",
+        "img": "cammy.png"
+    },
+    {
+        "name": "Chun-Li",
+        "gender": "female",
+        "country": "China",
+        "birth": "01-03-1968",
+        "move": ["Hyakuretsukyaku", "Spinning Bird Kick", "Kikouken"],
+        "super": "Senretsukyaku",
+        "img": "chunli.png"
+    },
+    {
+        "name": "Dee Jay",
+        "gender": "male",
+        "country": "Giamaica",
+        "birth": "31-10-1965",
+        "move": ["move-1", "move-2", "move-3"],
+        "super": "supermove",
+        "img": "deejay.png"
+    },
+    {
+        "name": "Dhalsim",
+        "gender": "male",
+        "country": "India",
+        "birth": "22-11-1952",
+        "move": ["Yoga Fire", "Yoga Flame", "Yoga Blast", "Yoga Teleport"],
+        "super": "Yoga Inferno",
+        "img": "dhalsim.png"
+    },
+    {
+        "name": "Fei Long",
+        "gender": "male",
+        "country": "Hong Kong",
+        "birth": "23-04-1969",
+        "move": ["move-1", "move-2", "move-3"],
+        "super": "supermove",
+        "img": "feilong.png"
+    },
+    {
+        "name": "Guile",
+        "gender": "male",
+        "country": "Stati Uniti",
+        "birth": "23-12-1960",
+        "move": ["Sonic Boom", "Sonic Hurricane", "null"],
+        "super": "Somersault Strike",
+        "img": "guile.png"
+    },
+    {
+        "name": "Honda",
+        "gender": "male",
+        "country": "Japan",
+        "birth": "03-11-1960",
+        "move": ["Hundred Hand Slap", "Super Zutsuki", "Hyakkan Otoshi"],
+        "super": "Oni Musou",
+        "img": "honda.png"
+    },
+    {
+        "name": "Ken",
+        "gender": "male",
+        "country": "Stati Uniti",
+        "birth": "14-02-1965",
+        "move": ["Hadouken", "Shoryuken", "Tatsumaki Senpukyaku"],
+        "super": "Shoryureppa",
+        "img": "ken.png"
+    },
+    {
+        "name": "M. Bison",
+        "gender": "male",
+        "country": "Stati Uniti",
+        "birth": "04-09-1968",
+        "move": ["Dash Punch", "Dash Uppercut", "Turning Punch"],
+        "super": "Crazy Buffalo",
+        "img": "mbison.png"
+    },
+    {
+        "name": "Ryu",
+        "gender": "male",
+        "country": "Japan",
+        "birth": "20-09-1964",
+        "move": ["Hadoken", "Shoryuken", "Shinkuu Tatsumakisenpukiaku"],
+        "super": "Shinkuu Hadoken",
+        "img": "ryu.png"
+    },
+    {
+        "name": "Sagat",
+        "gender": "male",
+        "country": "Thailandia",
+        "birth": "02-07-1955",
+        "move": ["Tiger Shot", "Ground Tiger Shot", "Tiger Uppercut"],
+        "super": "Tiger Cannon",
+        "img": "sagat.png"
+    },
+    {
+        "name": "T. Hawk",
+        "gender": "male",
+        "country": "Mexico",
+        "birth": "21-07-1959",
+        "move": ["Condor Dive", "Condor Spire", "Tomahawk Buster"],
+        "super": "Canion Splitter",
+        "img": "thawk.png"
+    },
+    {
+        "name": "Vega",
+        "gender": "male",
+        "country": "Thailandia",
+        "birth": "17-04-1955",
+        "move": ["Psycho Crusher", "Scissor Kick", "Head Stomp"],
+        "super": "Knee Press Nightmare",
+        "img": "vega.png"
+    },
+    {
+        "name": "Zangief",
+        "gender": "male",
+        "country": "Russia",
+        "birth": "01-06-1956",
+        "move": ["Spinning Piledriver", "Spinning Lariat", "Siberian Supplex"],
+        "super": "Final Atomic Buster",
+        "img": "zangief.png"
+    }
+]
+
