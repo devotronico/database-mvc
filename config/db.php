@@ -12,10 +12,10 @@ define("DB_PASS","");
 define("DB_NAME", "blog");
 
 } else {
-	die($_SERVER['SERVER_NAME']);
-define("DB_HOST", "89.46.111.69");
-define("DB_USER", "Sql1234437");
-define("DB_PASS","28b1z587ce");
-define("DB_NAME", "Sql1234437_1");
+//	die($_SERVER['SERVER_NAME']);
+define("DB_HOST", "");
+define("DB_USER", "");
+define("DB_PASS","");
+define("DB_NAME", "");
 
 }
