@@ -27,7 +27,7 @@ class Blog {
 * es. se abbiamo 30 post e vogliamo che vengano visualizzati 3 post ogni pagina                         |
 * allora faremo 30post / 3 che ci darà 10 pagine. in questo modo potremo fare la paginazione            |
 ********************************************************************************************************/
-public function totalPosts(){
+public function getTotalPosts(){
     
     $sql = 'SELECT COUNT(*) FROM users';
     if ($res = $this->conn->query($sql)) {
@@ -86,28 +86,45 @@ public function totalPosts(){
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
     /**
-     * LOAD USERS
-     * 
-     * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id volutpat 
-     * orci. Etiam pharetra eget turpis non ultrices. Pellentesque vitae risus 
-     * sagittis, vehicula massa eget, tincidunt ligula.
-     *
-     * @access private
-     * @author Firstname Lastname
-     * @global object $post
-     * @param int $id Author ID
-     * @param string $type Type of photo
-     * @param int $width Photo width in px
-     * @param int $height Photo height in px
-     * @return object Photo
-     */
+    * LOAD USERS
+    * 
+    * Carica i dati da un file JSON 
+    * Li converte in array di array Array
+    * Esempio
+        Array
+        (
+            [0] => Array
+                (
+                    [name] => Balrog
+                    [birth] => 27-01-1967
+                    [move] => Array
+                        (
+                            [0] => Rolling Crystal Claw
+                            [1] => Flying Barcellona Attack
+                        )
+                )
+            [1] => Array (...)
+        )
+    *
+    * 'regdate' è una variabile che contiene la data attuale di creazione di ogni riga
+    * che è uguale per tutte le righe perchè sono create nello stesso momento
+    *
+    * @access private
+    * @author Firstname Lastname
+    * @global object $post
+    * @param int $id Author ID
+    * @param string $type Type of photo
+    * @param int $width Photo width in px
+    * @param int $height Photo height in px
+    * @return object Photo
+    */
     public function loadUsers(){
 
 
-        $jsondata = file_get_contents('./public/data/sf.json');
+        $jsondata = file_get_contents('./public/data/data.json');
 
         $data = json_decode($jsondata, true);
-
+    
         // REG_DATE 
         $regdate = date('d-m-Y H:i');
         
@@ -115,6 +132,7 @@ public function totalPosts(){
                 VALUES (:img, :name, :gender, :country, :birth, :move_1, :move_2, :move_3, :super, :reg_date)';
         $stmt = $this->conn->prepare($sql); 
 
+        $num = 0;
         foreach ( $data as $d ) {
 
             $stmt->bindParam(':img',      $d['img'],         PDO::PARAM_STR, 16);
@@ -129,8 +147,12 @@ public function totalPosts(){
             $stmt->bindParam(':reg_date', $regdate,          PDO::PARAM_STR, 19);
 
             $stmt->execute();
+
+            $num ++;
         }
         $this->conn = null;
+
+        return $num;
         
     }
 
@@ -159,9 +181,14 @@ public function totalPosts(){
 
         $stmt = $this->conn->prepare($sql); 
 
-        $stmt->execute();
+        $res = $stmt->execute();
         
         $this->conn = null;
+
+        return $res;
+
+        // return $stmt->rowCount();
+
     }
 
 
@@ -203,8 +230,8 @@ public function totalPosts(){
 
         $regdate = date('d-m-Y H:i');
         $sql = 'INSERT INTO users (name, gender, country, birth, reg_date) VALUES (:name, :gender, :country, :birth, :reg_date)';
-        $stm = $this->conn->prepare($sql); 
-        $stm->execute([ 
+        $stmt = $this->conn->prepare($sql); 
+        $stmt->execute([ 
            
             'name'=> $data['name'], 
             'gender'=> $data['gender'], 
@@ -214,7 +241,7 @@ public function totalPosts(){
      
         ]); 
         $conn = null;
-        return $stm->rowCount();
+        return $stmt->rowCount();
         }
         
 

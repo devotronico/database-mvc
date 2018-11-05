@@ -33,9 +33,9 @@ class SingleController extends Controller {
 
         $user = $this->userClass->singleUser($id, "read");
 
-        $this->page = 'read';
-
-        $this->template = _view($this->page, compact('user'));
+     
+        $files=['navbar', 'read'];
+        $this->template = _view($files, compact('user'));
     }
 
 

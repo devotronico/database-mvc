@@ -56,8 +56,8 @@ class ListController extends Controller {
 
 
 /***********************************************************************************************************************|
-* GETPOSTS          metodo = GET    route = posts/page/id                                                               |
-* Otteniamo tutti i post di una pagina                                                                                  |     
+* PAGE         metodo = GET    route = posts/page/id                                                                    |
+* Con il metodo 'getTotalPosts' Otteniamo tutti i post di una pagina                                                                                   
 * Se ci sono i post allora viene caricato anche il template della paginazione                                           |   
 * Spiegazione Paginazione                                                                                               |
 * 'page' è la il numero della pagina in cui ci troviamo                                                                 |
@@ -70,30 +70,30 @@ class ListController extends Controller {
 * 0  2  4 sono i valori che ci servono per cominciare a contare i post da visualizzare {'postStart'}                    |
 ************************************************************************************************************************/
 public function page($currentPage=1){ 
-   /*
-    if ( isset($_COOKIE['user_id']) ) {
-     
-         $this->Blog->loginWithCookie(); 
-    }*/
+   
+    $totalPosts = $this->listClass->getTotalPosts();
+    //var_dump($totalPosts); string(2) "16"
 
-    $totalPosts = $this->listClass->totalPosts();
-    $link="posts";
+    $page = 'home';
+
     if ( empty($totalPosts ) ) { 
-        $this->page = 'empty';
-        $files=[$this->device.'.navbar-blog', 'post.empty'];
-        $this->content = View($this->device, 'blog', $files, compact('link', 'page')); 
+
+        $files=['navbar', 'buttons'];
+        $this->template = _view($files, compact('page'));
 
     } else {
 
-        $this->page = 'all';
+        // Pagination var
         $postForPage = 5; // decidiamo quanti post caricare per pagina
         for ($i=0, $postStart=-$postForPage; $i<$currentPage; $postStart+=$postForPage, $i++);
-        $users = $this->listClass->getpageUsers($postStart, $postForPage); 
         $pageLast = ceil($totalPosts / $postForPage);
         $activeLink = 4;
-        $this->template = _view($this->page, compact('totalPosts', 'postForPage', 'pageLast','currentPage', 'activeLink', 'users'));
-        // $dates = $this->listClass->getDates();
-        // $this->content = View($this->device, 'blog', $files, compact('link', 'posts', 'dates', 'currentPage', 'totalPosts', 'postForPage')); 
+
+
+        $users = $this->listClass->getpageUsers($postStart, $postForPage); 
+        $files=['navbar', 'buttons', 'list', 'pagination'];
+        $this->template = _view($files, compact('page', 'totalPosts', 'postForPage', 'pageLast','currentPage', 'activeLink', 'users'));
+     
     }
 }
 
@@ -102,50 +102,42 @@ public function page($currentPage=1){
 
 
 
-
-
-
-
-
-
-    //-----------------------------------------------------------------------------|
     /**
      * LOAD
      * 
-     *  Mostra la lista di tutti gli utenti presenti nel database
-     *  `$users` è un array di oggetti:
-     *      `$users[0]{"nome"=>foo, "age"=>20}` 
-     *      `$users[1]{"nome"=>bar, "age"=>30}`
-     * `_view`: è una funzione che carica codice html e variabili php 
-     * insieme  all'interno di un template
-     * `compact`: http://php.net/manual/en/function.compact.php
-     * `extract`: http://php.net/manual/en/function.extract.php
+     * Carica nel database i dati presi da un file json.
+     *           
+     * Il metodo loadUsers ritorna un valore integer 
+     * del numero di righe caricate nel database
      * 
      * @access public
      * @return null
      */
     public function load() {
 
-        $success = $this->listClass->loadUsers();
-   
+        $rowLoaded = $this->listClass->loadUsers();
+
+
+        if ( $rowLoaded ) {
+
+            $message = "Sono state caricate ".$rowLoaded." righe";
+           
+            _redirect('/', $message);
+        }
     }
     
     
 
 
     
-    //-----------------------------------------------------------------------------|
     /**
      * RESET
      * 
-     *  Mostra la lista di tutti gli utenti presenti nel database
-     *  `$users` è un array di oggetti:
-     *      `$users[0]{"nome"=>foo, "age"=>20}` 
-     *      `$users[1]{"nome"=>bar, "age"=>30}`
-     * `_view`: è una funzione che carica codice html e variabili php 
-     * insieme  all'interno di un template
-     * `compact`: http://php.net/manual/en/function.compact.php
-     * `extract`: http://php.net/manual/en/function.extract.php
+     * Cancella tutti i dati presenti nel database.
+     * Se la cancellazione è avvenuta
+     * il metodo 'resetUsers' restituisce bool(true). 
+     *  
+     * A cancellazione avvenuta fa il redirect nella home con un messaggio
      * 
      * @access public
      * @return null
@@ -153,7 +145,13 @@ public function page($currentPage=1){
     public function reset() {
 
         $success = $this->listClass->resetUsers();
-   
+
+        if ( isset($success) ) {
+
+            $message = "RESET";
+           
+            _redirect('/', $message);
+       }
     }
 
 
@@ -166,6 +164,9 @@ public function page($currentPage=1){
     /**
      * CREATE  {Crud}
      * 
+     * Dalla home cliccando sul bottone 'aggiungi utente' si attiva il metodo di questa
+     * classe che consente di inserire un nuovo utente all'interno del database.
+     * Se l'operazione ha successo si viene indirizzati nella home del sito.
      *  Crea un nuovo utente all' interno di un form
      *  `create()`: Carica il template(solo html) del form il cui metodo è POST
      *  `new()`:    Immagazzina nel database i dati inseriti nei campi di input ->
@@ -176,9 +177,13 @@ public function page($currentPage=1){
      */
     public function create() {
 
-        $this->page = 'create';
+       
 
-        $this->template = _view($this->page);
+        $files=['navbar', 'create'];
+
+        $this->template = _view($files);
+
+     
     }
 
     public function new() {
@@ -188,8 +193,8 @@ public function page($currentPage=1){
         if ( $success ) {
 
             $message = "SUCCESS";
-            $uri ='/list/';
-            _redirect($uri, $message);
+           
+            _redirect('/', $message);
         }
     }
 

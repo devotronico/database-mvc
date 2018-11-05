@@ -9,7 +9,7 @@ class Controller{
     protected $layout = 'layout/index.tpl.php';
  
     protected $template;
-    protected $page;
+    //public $page = 'home';
    
 
 
@@ -38,9 +38,6 @@ class Controller{
 
 
 
-    
-
-        
     //-----------------------------------------------------------------------------|
     /**
      * ERROR 404    
@@ -51,7 +48,12 @@ class Controller{
      */
     public function error(){
         
-        $this->page = 'error';
+        $page = 'error';
+
+        $files=['navbar', $page];
+
+        $this->template = _view($files);
+
     }
 
 
@@ -69,11 +71,14 @@ class Controller{
      * @access public
      * @return null
      */
-    public function about($arg1=3) {
+    public function about() {
 
-        $this->page = 'about';
-        $this->template = "<h1>".$this->page."</h1>";
-    }
+        $page = 'about';
+
+        $files=['navbar', $page];
+
+        $this->template = _view($files, compact('page'));   
+     }
 
 
     
@@ -85,9 +90,14 @@ class Controller{
      * @access public 
      * @return null
      */
-    public function contact($arg1=3) {
+    public function contact() {
 
-        $this->page = 'contact';
+        
+        $page = 'contact';
+
+        $files=['navbar', $page];
+
+        $this->template = _view($files, compact('page'));
     }
 
 

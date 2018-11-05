@@ -1,1 +1,3 @@
-<p>ABOUT</p>
+<main>
+<h3>ABOUT</h3>
+</main>

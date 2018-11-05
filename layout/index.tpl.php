@@ -11,13 +11,6 @@
 </head>
 <body>
     <div class="container">
-        <nav class="navigation">
-            <ul class="navigation__list">
-                <li class="navigation__item"><a class="navigation__link" href="/page/1">Users</a></li>
-                <li class="navigation__item"><a class="navigation__link" href="/contact">Contact</a></li>
-                <li class="navigation__item"><a class="navigation__link" href="/about">About</a></li>
-            </ul>
-        </nav>
         <div class="template">
             <p><?=$this->template?></p>
         </div>
