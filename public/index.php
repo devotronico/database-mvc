@@ -31,22 +31,24 @@ chdir(dirname(__DIR__));
 //che attivano le classi con i rispettivi metodi(VALORI) (es. "app\controller\Controller@home")
 $listOfRoutes = [
     'GET'=>[
+        "about" => "app\controller\Controller@about",
+        "contact" => "app\controller\Controller@contact",
+
         "" => "app\controller\ListController@page",
         "/" => "app\controller\ListController@page",
         "#page/:id" => "app\controller\ListController@page",
         "load" => "app\controller\ListController@load",
         "reset" => "app\controller\ListController@reset",
-        "create" => "app\controller\ListController@create",
+
+        "create" => "app\controller\SingleController@create",
         "#read/:id" => "app\controller\SingleController@read",
         "#update/:id" => "app\controller\SingleController@update",
-      
         "#delete/:id" => "app\controller\SingleController@delete",
-        "about" => "app\controller\Controller@about",
-        "contact" => "app\controller\Controller@contact",
     ],
     'POST'=>[
-        "new" => "app\controller\ListController@new",
-        "#store/:id" => "app\controller\SingleController@store",
+        "store" => "app\controller\SingleController@store",
+        "#edit/:id" => "app\controller\SingleController@edit",
+        'upload' => 'app\controller\SingleController@upload',
     ]
 ];
 
@@ -56,6 +58,7 @@ require_once 'core/Router.php';
 require_once 'app/models/Database.php';   
 require_once 'app/models/Blog.php';   
 require_once 'app/models/Single.php';   
+require_once 'app/models/Image.php';   
 require_once 'app/controller/Controller.php';   
 require_once 'app/controller/ListController.php';   
 require_once 'app/controller/SingleController.php';   

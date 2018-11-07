@@ -143,7 +143,50 @@ class Single {
 
 
 
+    private function getDatetimeLocal( string $type, string $datetime){
 
+        // REG_DATE  2018-10-29T16:03 -> 29-10-2018 16:03
+       
+
+        switch ( $type ) {
+
+            case 'create': // Elimina nella stringa il carattere 'T' per salvarla nel database e renderla leggibile dal utente
+            if ( empty($datetime) ) { return false; }
+            // if ( empty($datetime) ) { return 'yyyy-MM-dd hh:mm'; }
+            // if ( empty($datetime) ) { return '00-00-0000 00:00'; }
+                $expFirst = explode("T", $datetime); // $expFirst[0] = 2018-10-29      $expFirst[1] = 16:03
+                $temp = $expFirst[0];
+                $expSecond = explode("-", $temp); // [0] = 2018   [1] = 10    [2] = 29
+                $datetime = $expSecond[2]."-".$expSecond[1]."-".$expSecond[0]." ".$expFirst[1];
+            break;
+
+            case 'update': // Inserisce nella stringa il carattere 'T' per renderla leggibile dal form
+            if ( empty($datetime) ) { return false; }
+            // if ( empty($datetime) ) { return 'yyyy-MM-ddThh:mm'; }
+            // if ( empty($datetime) ) { return '00-00-0000T00:00'; }
+                $expFirst = explode(" ", $datetime); // $expFirst[0] = 29-10-2018      $expFirst[1] = 16:03
+                $temp = $expFirst[0];
+                $expSecond = explode("-", $temp); // [0] = 29   [1] = 10    [2] = 2018
+                $datetime = $expSecond[2]."-".$expSecond[1]."-".$expSecond[0]."T".$expFirst[1];
+            break;
+
+        }
+        return $datetime;
+    }
+
+
+
+    private function getDateBirth(string $datebirth){
+        // BIRTH
+        // dal form la data arriva in questo formato: 2000-12-30
+        // ma la cambiamo in questo formato: 30-12-2000
+        if ( empty($datebirth) ) {  return false; }
+        // if ( empty($datebirth) ) {  return '00-00-0000'; }
+
+        $exp = explode("-", $datebirth); // [0] = 1964   [1] = 09    [2] = 20
+        $datebirth = $exp[2]."-".$exp[1]."-".$exp[0];
+        return $datebirth;
+    }
 
 
 
@@ -162,38 +205,52 @@ class Single {
      * @param string $type Type of photo
      * @param int $width Photo width in px
      * @param int $height Photo height in px
-     * @return object Photo
+     * @return string 
      */
-    public function createUser(array $data=[]){
+    public function createUser(array $data=[]) {
 
+        $data['imageName'] = !is_null($data['imageName']) ?  $data['imageName'] : 'avatar-default.png';
 
         // BIRTH
-        // dal form la data arriva in questo formato: 2000-12-30
-        // ma voglio cambiarla in questo formato: 30/12/2000
-        $exp = explode("-", $data['birth']); // [0] = 1964   [1] = 09    [2] = 20
-        $data['birth'] = $exp[2]."-".$exp[1]."-".$exp[0];
+        $data['birth'] = $this->getDateBirth($data['birth']);
+
+         // SET_DATE 
+        $data['set_date'] = $this->getDatetimeLocal('create', $data['set_date']);
 
         // REG_DATE 
-
-
         $regdate = date('d-m-Y H:i');
-        $sql = 'INSERT INTO users (name, gender, country, birth, reg_date) VALUES (:name, :gender, :country, :birth, :reg_date)';
-        $stm = $this->conn->prepare($sql); 
-        $stm->execute([ 
-           
-            'name'=> $data['name'], 
-            'gender'=> $data['gender'], 
-            'country'=>$data['country'], 
-            'birth'=>$data['birth'], 
-            'reg_date'=>$regdate,
-     
-        ]); 
-        $conn = null;
-        return $stm->rowCount();
+
+     //   $data['email'] = !empty($data['email']) ? $data['email'] : 'example@mail.com';
+
+        foreach($data as $prop => $value) {
+
+            if ( empty($data[$prop]) ) {  
+
+                $data[$prop] = false;
+                // $data[$prop] = 'assente';
+            }
         }
-        
 
 
+        $sql = 'INSERT INTO users (img, name, gender, email, country, birth, set_date, reg_date)
+        VALUES (:img, :name, :gender, :email, :country, :birth, :set_date, :reg_date)';
+
+        $stmt = $this->conn->prepare($sql); 
+
+        $stmt->bindParam(':img', $data['imageName'], PDO::PARAM_STR, 32);
+        $stmt->bindParam(':name', $data['name'], PDO::PARAM_STR, 32);
+        $stmt->bindParam(':gender', $data['gender'], PDO::PARAM_STR, 32);
+        $stmt->bindParam(':email', $data['email'], PDO::PARAM_STR, 32);
+        $stmt->bindParam(':country', $data['country'], PDO::PARAM_STR, 32);
+        $stmt->bindParam(':birth', $data['birth'], PDO::PARAM_STR, 32);
+        $stmt->bindParam(':set_date', $data['set_date'], PDO::PARAM_STR, 32);
+        $stmt->bindParam(':reg_date', $regdate, PDO::PARAM_STR, 32);
+
+        return $stmt->execute();
+        //$stmt->execute();
+       // echo $this->conn->lastInsertId();  //die();
+    }
+// END CREATE USER        
 
 
 
@@ -234,24 +291,20 @@ class Single {
                 switch ( $type ) {
 
                     case "read":
-                   
+                    //   
                     break;
                     case "update":
 
-                         // BIRTH
-                        $exp = explode("-", $user->birth); // [0] = 30  [1] = 12    [2] = 1950
-                        $user->birth = $exp[2]."-".$exp[1]."-".$exp[0];
+                        $user->birth = $this->getDateBirth($user->birth);
 
-                        // REG_DATE  29-10-2018 16:03 ->  2018-10-29T16:03
-                        $expFirst = explode(" ", $user->reg_date); // $expFirst[0] = 29-10-2018      $expFirst[1] = 16:03
-                        $temp = $expFirst[0];
-                        $expSecond = explode("-", $temp); // [0] = 29   [1] = 10    [2] = 2018
-                        $user->reg_date = $expSecond[2]."-".$expSecond[1]."-".$expSecond[0]."T".$expFirst[1];
+                        $user->set_date = $this->getDatetimeLocal('update', $user->set_date);
+                        
+                        $user->reg_date = $this->getDatetimeLocal('update', $user->reg_date);
                     break;
-                    case "delete":  break;
+                   // case "delete":  break;
                 }
            
-
+                $user->img = "/image/avatar/".$user->img;
                 return $user;
 
             } else {
@@ -275,34 +328,125 @@ class Single {
 
 public function updateUser(int $id, array $data=[]){
         
-
-     // BIRTH
-     $exp = explode("-", $data['birth']); // [0] = 1964   [1] = 09    [2] = 20
-     $data['birth'] = $exp[2]."-".$exp[1]."-".$exp[0];
+    // CANCELLARE IMMAGINE
+    $data['imageName'] = !is_null($data['imageName']) ? $data['imageName'] : 'avatar-default.png';
 
 
-    // REG_DATE  2018-10-29T16:03 -> 29-10-2018 16:03
-    $expFirst = explode("T", $data['reg_date']); // $expFirst[0] = 2018-10-29      $expFirst[1] = 16:03
-    $temp = $expFirst[0];
-    $expSecond = explode("-", $temp); // [0] = 2018   [1] = 10    [2] = 29
-    $data['reg_date'] = $expSecond[2]."-".$expSecond[1]."-".$expSecond[0]." ".$expFirst[1];
+    // DATE
+    $data['birth'] = $this->getDateBirth($data['birth']);
+    $data['set_date'] = $this->getDatetimeLocal('create', $data['set_date']);
+    $data['reg_date'] = $this->getDatetimeLocal('create', $data['reg_date']);
+                        
+
+    if ( isset( $data['imageName'] ))   { echo '<pre>';print_r( $data['imageName'] );'</pre>'; }
+    if ( isset( $data['name'] ))        { echo '<pre>';print_r( $data['name'] );'</pre>'; }
+    if ( isset( $data['gender'] ))      { echo '<pre>';print_r( $data['gender'] );'</pre>'; }
+    if ( isset( $data['email'] ))       { echo '<pre>';print_r( $data['email'] );'</pre>'; }
+    if ( isset( $data['country'] ))     { echo '<pre>';print_r( $data['country'] );'</pre>'; }
+    if ( isset( $data['birth'] ))       { echo '<pre>';print_r( $data['birth'] );'</pre>'; }
+    if ( isset( $data['set_date'] ))    { echo '<pre>';print_r( $data['set_date'] );'</pre>'; }
+    if ( isset( $data['reg_date'] ))    { echo '<pre>';print_r( $data['reg_date'] );'</pre>'; }
+
+    //die();
 
 
-    $sql = "UPDATE users SET name = :name, gender = :gender, country = :country, birth = :birth, reg_date = :reg_date  WHERE id = :id";
+
+    $sql = "UPDATE users SET img = :img, name = :name, gender = :gender, email = :email, country = :country, birth = :birth, set_date = :set_date, reg_date = :reg_date  WHERE id = :id";
 
     $stmt = $this->conn->prepare($sql);
 
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-    $stmt->bindParam(':name', $data['name'], PDO::PARAM_STR, 255);
-    $stmt->bindParam(':gender', $data['gender'], PDO::PARAM_STR, 255);
-    $stmt->bindParam(':country', $data['country'], PDO::PARAM_STR, 255);
-    $stmt->bindParam(':birth', $data['birth'], PDO::PARAM_STR, 255);
-    $stmt->bindParam(':reg_date', $data['reg_date'], PDO::PARAM_STR, 255);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT, 255);
+    $stmt->bindParam(':img', $data['imageName'], PDO::PARAM_STR, 32);
+    $stmt->bindParam(':name', $data['name'], PDO::PARAM_STR, 32);
+    $stmt->bindParam(':gender', $data['gender'], PDO::PARAM_STR, 32);
+    $stmt->bindParam(':email', $data['email'], PDO::PARAM_STR, 32);
+    $stmt->bindParam(':country', $data['country'], PDO::PARAM_STR, 32);
+    $stmt->bindParam(':birth', $data['birth'], PDO::PARAM_STR, 32);
+    $stmt->bindParam(':set_date', $data['set_date'], PDO::PARAM_STR, 32);
+    $stmt->bindParam(':reg_date', $data['reg_date'], PDO::PARAM_STR, 32);
     
     $stmt->execute();
-    $conn = null;
-    return $stmt->rowCount();
+    $stmt = null;
+    return true;
  }
+
+
+
+
+
+
+
+
+
+
+  /*******************************************************************************************************************|
+    * DELETE IMAGE                                                                                                      |
+    * quando vogliamo cambiare l'immagine di un post                                                                    |
+    * dobbiamo prima eliminare il file immagine attuale che sta nella cartella dove è immagazzinato,                    |
+    * Ci occorre il nome del'immagine il quale lo otteniamo facendo una select al database con l'id del post            |                 
+    * Utilizziamo con la funzione builtin di php 'unlink' passandoci il percorso del file più il nome del file          |
+    * l'immagine viene eliminata                                                                                        |
+    ********************************************************************************************************************/
+    public function deleteImage($id) {
+    
+        $id = (int)$id;
+        $sql = "SELECT img FROM users WHERE id = :id";
+
+        $stmt = $this->conn->prepare($sql);
+        
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) { 
+
+            $user = $stmt->fetch(PDO::FETCH_OBJ);
+
+            if ( $user->img != 'avatar-default.png' ) {
+
+                unlink("public/image/avatar/".$user->img);
+            }
+        $stmt = null; 
+        //$this->conn = null; 
+        }
+    }
+
+
+
+    /*******************************************************************************************************************|
+    * CHECK IMAGE EXISTS     !!!! [METODO NON USATO]                                                                                          
+    * Se durante lo sviluppo decidiamo di cancellare delle immagini dei post a mano                                     |
+    * questo metodo in automatico si occupa di cancellare anche il nome del file che è memorizzato nel database         |
+    ********************************************************************************************************************/
+    public function checkImageExists($id) {
+    
+        $id = (int)$id;
+        $sql = "SELECT img FROM users WHERE id = :id";
+
+        $stmt = $this->conn->prepare($sql);
+        
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) { 
+
+            $user = $stmt->fetch(PDO::FETCH_OBJ);
+
+            if ( $user->img != 'avatar-default.png' ) {
+
+                $filename = "/image/avatar/".$user->img;
+
+                if (!file_exists($filename)) {
+               
+                    $sql = "UPDATE users SET img = null WHERE id = :id";
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                    $stmt->execute();
+                }
+            }
+        } 
+    }
+// CHIUDE UPDATE
+
+
+
 
 
 
@@ -312,9 +456,10 @@ public function updateUser(int $id, array $data=[]){
  public function deleteUser(int $id){
         
     $sql = 'DELETE FROM users WHERE id = :id';
-    $stm = $this->conn->prepare($sql); 
-    $stm->bindParam(':id', $id, PDO::PARAM_INT); 
-    $stm->execute(); 
+    $stmt = $this->conn->prepare($sql); 
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT); 
+    $stmt->execute(); 
+    return $stmt->rowCount();
  }
 
 
@@ -332,6 +477,7 @@ public function updateUser(int $id, array $data=[]){
  * die( '' );
  * var_dump( $ );
  * echo '<pre>';print_r( $ );
+ * if ( isset( $ )) { var_dump( $ ); echo '<pre>';print_r( $ ); die(); }
  */
 
 

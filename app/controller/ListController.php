@@ -160,44 +160,7 @@ public function page($currentPage=1){
 
 
 
-    //-----------------------------------------------------------------------------|
-    /**
-     * CREATE  {Crud}
-     * 
-     * Dalla home cliccando sul bottone 'aggiungi utente' si attiva il metodo di questa
-     * classe che consente di inserire un nuovo utente all'interno del database.
-     * Se l'operazione ha successo si viene indirizzati nella home del sito.
-     *  Crea un nuovo utente all' interno di un form
-     *  `create()`: Carica il template(solo html) del form il cui metodo è POST
-     *  `new()`:    Immagazzina nel database i dati inseriti nei campi di input ->
-     *              del form e riporta l' utente alla pagina della lista degli users
-     * 
-     * @access public
-     * @return null
-     */
-    public function create() {
-
-       
-
-        $files=['navbar', 'create'];
-
-        $this->template = _view($files);
-
-     
-    }
-
-    public function new() {
-
-        $success = $this->listClass->createUser($_POST);
-
-        if ( $success ) {
-
-            $message = "SUCCESS";
-           
-            _redirect('/', $message);
-        }
-    }
-
+   
 
 
 

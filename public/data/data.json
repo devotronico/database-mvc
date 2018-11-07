@@ -33,7 +33,7 @@
         "birth": "01-03-1968",
         "move": ["Hyakuretsukyaku", "Spinning Bird Kick", "Kikouken"],
         "super": "Senretsukyaku",
-        "img": "chunli.png"
+        "img": "chun-li.png"
     },
     {
         "name": "Dee Jay",
@@ -42,7 +42,7 @@
         "birth": "31-10-1965",
         "move": ["move-1", "move-2", "move-3"],
         "super": "supermove",
-        "img": "deejay.png"
+        "img": "dee-jay.png"
     },
     {
         "name": "Dhalsim",
@@ -60,7 +60,7 @@
         "birth": "23-04-1969",
         "move": ["move-1", "move-2", "move-3"],
         "super": "supermove",
-        "img": "feilong.png"
+        "img": "fei-long.png"
     },
     {
         "name": "Guile",
@@ -96,7 +96,7 @@
         "birth": "04-09-1968",
         "move": ["Dash Punch", "Dash Uppercut", "Turning Punch"],
         "super": "Crazy Buffalo",
-        "img": "mbison.png"
+        "img": "m-bison.png"
     },
     {
         "name": "Ryu",
@@ -123,7 +123,7 @@
         "birth": "21-07-1959",
         "move": ["Condor Dive", "Condor Spire", "Tomahawk Buster"],
         "super": "Canion Splitter",
-        "img": "thawk.png"
+        "img": "t-hawk.png"
     },
     {
         "name": "Vega",
