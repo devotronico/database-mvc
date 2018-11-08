@@ -49,6 +49,7 @@ $listOfRoutes = [
         "store" => "app\controller\SingleController@store",
         "#edit/:id" => "app\controller\SingleController@edit",
         'upload' => 'app\controller\SingleController@upload',
+        '#delete/image/:id' => 'app\controller\SingleController@deleteImage',
     ]
 ];
 

@@ -1,12 +1,14 @@
 <main>
 
   <div class="row">
-    <div class="col-4">
+    <div class="col-md-4">
         <div class='profile__img__box text-center'>
           <img class='profile__img' src="<?=$user->img?>" alt="avatar personale">
         </div>
+          <a class="btn btn-danger form-btn btn-canc-img" href="/delete/image/<?=$user->id?>">&#128473;</a>
+          <p id="status">Status</p>
       </div>
-    <div class="col-8">
+    <div class="col-md-8">
       <form action="/edit/<?=$user->id?>" method="POST" enctype="multipart/form-data">
 
         <!-- IMMAGINE -->

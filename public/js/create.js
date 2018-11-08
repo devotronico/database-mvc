@@ -1,60 +1,160 @@
-console.log('CREATE');
- /*
- * ESEMPIO di questo script sta a questo indirizzo https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
- */   
-var input = document.querySelector('#image');
-var preview = document.querySelector('.preview');
 
-//input.style.opacity = 0;
-//input.style.display = 'none';
+document.querySelector('.btn-canc-img').addEventListener('click', function(event){
+
+
+
+
+  event.preventDefault()
+
+
+  console.log(event.target.pathname);  
+  const pathname = event.target.pathname; //  /delete/image/3
+  const tokens = pathname.split('/'); 
+  const path = tokens[1]+'/'+tokens[2];
+  const id = tokens[3];
+  console.log(path);    
+  console.log(id); 
+
+  ajax_post();
+
+  function ajax_post(){
+  
+    var hr = new XMLHttpRequest();
+ 
+    var url = pathname; // "index.php"  // "my_parse_file.php";
+
+    var vars = path; //  /delete/image/3
+    hr.open("POST", url, true);
+    // Set content type header information for sending url encoded variables in the request
+    hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    // Access the onreadystatechange event for the XMLHttpRequest object
+    hr.onreadystatechange = function() {
+
+	    if(hr.readyState == 4 && hr.status == 200) {
+
+        var return_data = hr.responseText;
+  console.log(return_data); 
+        
+			  document.getElementById("status").innerHTML = return_data;
+	    }
+    }
+    // Send the data to PHP now... and wait for response to update the status div
+    hr.send(); // Actually execute the request
+    document.getElementById("status").innerHTML = "processing...";
+}
+
+
+
+});
+/*
+document.createElement('.test').addEventListener('click', function(e){
+
+//e.preventDefault();
+  console.log(e);
+});
+
+
+*/
+
+
+
+
+
+
+
+// ESEMPIO di questo script sta a questo indirizzo https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+    
+const input = document.querySelector('#image'); // seleziona il campo di input type="file"
+const preview = document.querySelector('.preview'); // seleziona un contenitore vuoto 
+
+
+// 'change' rileva se viene premuto l'elemento <input> per caricare il file
 input.addEventListener('change', updateImageDisplay);
 
 function updateImageDisplay() {
 
-  // fintanto preview.firstChild = true 
-  while(preview.firstChild) {
+  // Se trova elementi figli.
+  // Del contenitore '.preview' elimina tutti gli elementi figli creati precedentemente.
+  // Elimina la lista che contiene l'immagine e la descrizione del peso dell'immagine.
+  // Vengono eliminati gli elementi:  ul > li > img , li > small
+  while(preview.firstChild) { 
+
     preview.removeChild(preview.firstChild);
   }
 
-  var curFiles = input.files;
 
-    var list = document.createElement('ul');
+  // curFiles è un oggetto 
+  /*
+  input.files è un oggetto con informazioni sul file come: size, name, type
+   console.log(input.files);
+
+  FileList
+0: File(53051)
+    lastModified: 1535095225579
+    lastModifiedDate: Fri Aug 24 2018 09:20:25 GMT+0200 (Ora legale dell’Europa centrale) {}
+    name: "grizzly_bear-8210.jpg"
+    size: 53051
+    type: "image/jpeg"
+    length: 1
+
+*/
+const curFiles = input.files; 
+ 
+  console.log(input.files[0].size);
+
+  const list = document.createElement('ul');
     list.style.listStyleType = 'none';
+    list.style.padding = '0';
+
     preview.appendChild(list); 
-  //  for(var i = 0; i < curFiles.length; i++) { // verificare se si può eliminare il ciclo //console.log( curFiles.length);
-      var listItem = document.createElement('li');
-      var para = document.createElement('small');
 
-      console.log(  parseFloat(curFiles[0].size * 0.000001).toFixed(2) );
+  const itemImage = document.createElement('li'); // contenitore  dell' immagine
+  const itemSize = document.createElement('li');  // contenitore dell' informazioni sul peso del file
+  const info = document.createElement('small');   // elemento dell' informazioni sul peso del file
 
-      if(validFileType(curFiles[0])) {
-        para.textContent = returnFileSize(curFiles[0].size);
-        // para.textContent = 'File name ' + curFiles[0].name + ' - file size ' + returnFileSize(curFiles[0].size) + '.';
-        var image = document.createElement('img');
-        image.src = window.URL.createObjectURL(curFiles[0]);
-        image.width = 280;
 
-        listItem.appendChild(image);
-        listItem.appendChild(para);
+      
+    // Se il tipo di file caricato è valido...
+    if ( validFileType(curFiles[0]) ) { 
+      
+      // assegniamo il valore del peso in megabytes e arrotondato a un elemento
+      info.textContent = returnFileSize(curFiles[0].size); 
 
-      } else {
-        para.textContent = 'File name ' + curFiles[0].name + ': Il tipo di file non è valido.';
-        listItem.appendChild(para);
-      }
+      // Crea il tag <img>
+      const image = document.createElement('img');
+      image.src = window.URL.createObjectURL(curFiles[0]);
+      image.width = 280;
 
-      list.appendChild(listItem);
+      itemImage.appendChild(image);
+      itemSize.appendChild(info);
+
+    } else {
+      info.textContent = 'File name ' + curFiles[0].name + ': Il tipo di file non è valido.';
+      itemSize.appendChild(info);
+    }
+
+    list.appendChild(itemImage);
+    list.appendChild(itemSize);
+
+
+
 }
 
 
+
+
+
+//FUNZIONI DI SUPPORTO---------------------------------------
+
 // CONTROLLO SUI TIPI DI FILE SUPPORTATI
-var fileTypes = [
+const fileTypes = [
   'image/jpeg',
   'image/pjpeg',
   'image/png'
 ]
 
 function validFileType(file) {
-  for(var i = 0; i < fileTypes.length; i++) {
+  for(let i = 0; i < fileTypes.length; i++) {
     if(file.type === fileTypes[i]) {
       return true;
     }
@@ -63,6 +163,15 @@ function validFileType(file) {
 }
 
 
+
+// ARROTONDAMENTO DELLE DIMENSIONI DEL FILE Per una migliore leggibilità del valore del peso del file.
+// curFiles[0].size restituisce il valore del peso del file in Bytes(B)
+// se un file pesa:  70000 Bytes(B) verrà convertito in 0.07000000000000000 Megabytes(MB)  
+// 70000 Bytes(B) = 0.07000000000000000 Megabytes(MB)  
+// per tenerci fino ai centesimi di Megabytes(MB) : cioè vogliamo ottenere 0.07 tagliando tutti i numeri che vengono dopo i centesimi
+// eseguiamo la seguente espressione:  parseFloat(0.07000000000000000 * 0.000001).toFixed(2) 
+// che restituirà:  0.07
+//console.log(  parseFloat(curFiles[0].size * 0.000001).toFixed(2) ); //0.07
 function returnFileSize(number) {
   if(number < 500000) {
 
@@ -73,5 +182,5 @@ function returnFileSize(number) {
     return 'Le dimensioni del file superano il limite massimo di 0.5 megabytes';
   }
 }
-
+//CHIUDE FUNZIONI DI SUPPORTO---------------------------------------
 

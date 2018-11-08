@@ -19,6 +19,18 @@ class SingleController extends Controller {
    
     
 
+ //-----------------------------------------------------------------------------|
+    /**
+     * DELETE IMAGE  {AJAX}
+     * 
+     * 
+     * @access public
+     * @return string
+     */
+    public function deleteImage() {
+
+       die( 'Immagine Cancellata');
+    }
 
 
  //-----------------------------------------------------------------------------|
@@ -59,12 +71,16 @@ class SingleController extends Controller {
  * scaleType:   tipo di ridimensionamento da applicare all'immagine ==> 'normal'
  * max_width:   massima larghezza del file da noi accettato         ==> 0
  * max_height:  massima altezza del file da noi accettato           ==> 0
- * max_size:    massima peso del file da noi accettato              ==> 1000000
+ * max_size:    massima peso del file da noi accettato              ==> 500000 ( = 0.5 Megabytes(MB))
  * folder:      cartella del percorso del file dove verrà salvato   ==> 'avatar'
  * array:       $_FILES che contiene tutti i valori del file        ==> $_FILES
  * 
  * 
- * Per  https://www.gbmb.org/bytes-to-mb
+ * Per maggiori info sull' unità di misura del peso delle immagini:  https://www.gbmb.org/bytes-to-mb
+ * 1    Megabytes(MB) = 1000000 Bytes(B)
+ * 0.5  Megabytes(MB) =  500000 Bytes(B)
+ * 0.25 Megabytes(MB) =  250000 Bytes(B)
+ * 
  * @access private
  * @author Daniele Manzi
  * @return string nome dell' immagine
@@ -81,7 +97,7 @@ class SingleController extends Controller {
         }
         else
         {
-            $Image = new Image('normal', 0, 0, 1000000, 'avatar', $_FILES);
+            $Image = new Image('normal', 0, 0, 500000, 'avatar', $_FILES);
 
             if ( !empty( $Image->getMessage()) ){ // se si è verificato un errore...
               
