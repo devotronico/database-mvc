@@ -1,147 +1,98 @@
 [
     {
-        "name": "Balrog",
+        "img": "dan.jpg",
+        "name": "Daniele",
         "gender": "male",
-        "country": "Spain",
         "birth": "27-01-1967",
-        "move": ["Rolling Crystal Claw", "Flying Barcellona Attack", "Izuna Drop"],
-        "super": "Flying Barcellona Special",
-        "img": "balrog.png"
+        "fiscalcode": "mnzdnl83r15h931h",
+        "tel": "3331060677",
+        "email": "dmanzi83@hotmail.it",
+        "address": {
+            "street": "Sepe",
+            "cap": "80035",
+            "city": "Nola",
+            "country": "Italy"
+        },
+        "colors": ["red", "yellow"],
+        "level": "5",
+        "look": "adult",
+        "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus egestas, nibh quis scelerisque feugiat, metus ex facilisis enim, at posuere neque li."
     },
     {
-        "name": "Blanka",
+        "img": "robot.jpg",
+        "name": "Robot",
         "gender": "male",
-        "country": "Brasil",
-        "birth": "12-02-1966",
-        "move": ["Electric Thunder", "Rolling Attack", "Backstep Rolling"],
-        "super": "Ground Shave Rolling",
-        "img": "blanka.png"
+        "birth": "10-01-1010",
+        "fiscalcode": "CYBRBT00A01L219B",
+        "tel": "1011010010",
+        "email": "robot@hotgear.it",
+        "address": {
+            "street": "Circuito",
+            "cap": "10010",
+            "city": "Techcity",
+            "country": "Roboland"
+        },
+        "colors":["blue", "gray"],
+        "level": "25",
+        "look": "old",
+        "info": "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin sed sapien sit amet est rhoncus interdum sodales ve."
     },
     {
-        "name": "Cammy",
-        "gender": "female",
-        "country": "Regno Unito",
-        "birth": "06-01-1974",
-        "move": ["Spiral Arrow", "Cannon Spike", "Spinning Knuckle"],
-        "super": "supermove",
-        "img": "cammy.png"
-    },
-    {
-        "name": "Chun-Li",
-        "gender": "female",
-        "country": "China",
-        "birth": "01-03-1968",
-        "move": ["Hyakuretsukyaku", "Spinning Bird Kick", "Kikouken"],
-        "super": "Senretsukyaku",
-        "img": "chun-li.png"
-    },
-    {
-        "name": "Dee Jay",
+        "img": "alien.png",
+        "name": "Alien",
         "gender": "male",
-        "country": "Giamaica",
-        "birth": "31-10-1965",
-        "move": ["move-1", "move-2", "move-3"],
-        "super": "supermove",
-        "img": "dee-jay.png"
+        "birth": "27-01-1977",
+        "fiscalcode": "XNELNA77A27F205P",
+        "tel": "3335272899",
+        "email": "alien@xenomail.net",
+        "address": {
+            "street": "Cunicoli",
+            "cap": "80123",
+            "city": "Alveare",
+            "country": "Marte"
+        },
+        "colors": ["black", "green"],
+        "level": "76",
+        "look": "young",
+        "info": "Donec dapibus sapien tellus, id sagittis justo volutpat vel. Integer id tellus ac erat gravida viverra. In blandit felis lectus, quis rutrum est hend."
     },
     {
-        "name": "Dhalsim",
+        "img": "skeleton.png",
+        "name": "Skeleton",
         "gender": "male",
-        "country": "India",
-        "birth": "22-11-1952",
-        "move": ["Yoga Fire", "Yoga Flame", "Yoga Blast", "Yoga Teleport"],
-        "super": "Yoga Inferno",
-        "img": "dhalsim.png"
+        "birth": "13-11-1900",
+        "fiscalcode": "BNOSLT00S13D612G",
+        "tel": "3339090909",
+        "email": "skeleton@bone.net",
+        "address": {
+            "street": "Deathstreet",
+            "cap": "90900",
+            "city": "Catacomb",
+            "country": "Cemetery"
+        },
+        "colors": ["black", "white"],
+        "level": "36",
+        "look": "old",
+        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis. Pellentesque euismod leo tempus auctor venenatis. Aliquam."
     },
     {
-        "name": "Fei Long",
-        "gender": "male",
-        "country": "Hong Kong",
-        "birth": "23-04-1969",
-        "move": ["move-1", "move-2", "move-3"],
-        "super": "supermove",
-        "img": "fei-long.png"
-    },
-    {
-        "name": "Guile",
-        "gender": "male",
-        "country": "Stati Uniti",
-        "birth": "23-12-1960",
-        "move": ["Sonic Boom", "Sonic Hurricane", "null"],
-        "super": "Somersault Strike",
-        "img": "guile.png"
-    },
-    {
-        "name": "Honda",
-        "gender": "male",
-        "country": "Japan",
-        "birth": "03-11-1960",
-        "move": ["Hundred Hand Slap", "Super Zutsuki", "Hyakkan Otoshi"],
-        "super": "Oni Musou",
-        "img": "honda.png"
-    },
-    {
-        "name": "Ken",
-        "gender": "male",
-        "country": "Stati Uniti",
-        "birth": "14-02-1965",
-        "move": ["Hadouken", "Shoryuken", "Tatsumaki Senpukyaku"],
-        "super": "Shoryureppa",
-        "img": "ken.png"
-    },
-    {
-        "name": "M. Bison",
-        "gender": "male",
-        "country": "Stati Uniti",
-        "birth": "04-09-1968",
-        "move": ["Dash Punch", "Dash Uppercut", "Turning Punch"],
-        "super": "Crazy Buffalo",
-        "img": "m-bison.png"
-    },
-    {
-        "name": "Ryu",
-        "gender": "male",
-        "country": "Japan",
-        "birth": "20-09-1964",
-        "move": ["Hadoken", "Shoryuken", "Shinkuu Tatsumakisenpukiaku"],
-        "super": "Shinkuu Hadoken",
-        "img": "ryu.png"
-    },
-    {
-        "name": "Sagat",
-        "gender": "male",
-        "country": "Thailandia",
-        "birth": "02-07-1955",
-        "move": ["Tiger Shot", "Ground Tiger Shot", "Tiger Uppercut"],
-        "super": "Tiger Cannon",
-        "img": "sagat.png"
-    },
-    {
-        "name": "T. Hawk",
-        "gender": "male",
-        "country": "Mexico",
-        "birth": "21-07-1959",
-        "move": ["Condor Dive", "Condor Spire", "Tomahawk Buster"],
-        "super": "Canion Splitter",
-        "img": "t-hawk.png"
-    },
-    {
-        "name": "Vega",
-        "gender": "male",
-        "country": "Thailandia",
-        "birth": "17-04-1955",
-        "move": ["Psycho Crusher", "Scissor Kick", "Head Stomp"],
-        "super": "Knee Press Nightmare",
-        "img": "vega.png"
-    },
-    {
-        "name": "Zangief",
-        "gender": "male",
-        "country": "Russia",
-        "birth": "01-06-1956",
-        "move": ["Spinning Piledriver", "Spinning Lariat", "Siberian Supplex"],
-        "super": "Final Atomic Buster",
-        "img": "zangief.png"
+        "img": "unknown.png",
+        "name": "Unknown",
+        "gender": "",
+        "birth": "13-11-1900",
+        "fiscalcode": "BNOSLT00S13D612G",
+        "tel": "3332222222",
+        "email": "skeleton@bone.net",
+        "address": {
+            "street": "unknow",
+            "cap": "00000",
+            "city": "Catacomb",
+            "country": "Cemetery"
+        },
+        "colors": ["transparent", "transparent"],
+        "level": "0",
+        "look": "old",
+        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis. Pellentesque euismod leo tempus auctor venenatis. Aliquam."
     }
 ]
 

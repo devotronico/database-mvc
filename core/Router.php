@@ -171,6 +171,7 @@ class Router
             // $method(come argomento accetta una stringa del nome di un metodo della classe) e il suo 'metodo' sono richiamabili
             if(method_exists($class, $method)){ // Se il metodo trovato esiste
               
+          
                 call_user_func_array([$class, $method], $matches); //es. ([PostController, delete], 8)
            
                 return $class;
@@ -184,3 +185,15 @@ class Router
     }
     
 }  // chiude classe Router
+
+
+   /*
+                $id = join("",$matches);
+             
+                if (preg_match('/^\d+$/', $id)) {
+              
+                  //   var_dump( $id ); 
+                     $id = intval($id);
+                    // var_dump( $id ); die(); 
+                }
+                  */

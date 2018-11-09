@@ -40,29 +40,36 @@ $listOfRoutes = [
         "load" => "app\controller\ListController@load",
         "reset" => "app\controller\ListController@reset",
 
-        "create" => "app\controller\SingleController@create",
-        "#read/:id" => "app\controller\SingleController@read",
-        "#update/:id" => "app\controller\SingleController@update",
-        "#delete/:id" => "app\controller\SingleController@delete",
+        "create" => "app\controller\CreateController@create",
+        "#read/:id" => "app\controller\ReadController@read",
+        "#update/:id" => "app\controller\UpdateController@update",
+        "#delete/:id" => "app\controller\DeleteController@delete",
     ],
     'POST'=>[
-        "store" => "app\controller\SingleController@store",
-        "#edit/:id" => "app\controller\SingleController@edit",
-        'upload' => 'app\controller\SingleController@upload',
-        '#delete/image/:id' => 'app\controller\SingleController@deleteImage',
+        "store" => "app\controller\CreateController@store",
+        "#edit/:id" => "app\controller\UpdateController@edit",
+        '#delete/image/:id' => 'app\controller\DeleteController@deleteImage',
+      //  'upload' => 'app\controller\SingleController@upload',
     ]
 ];
+
 
 // CLASSI
 require_once 'config/db.php';   
 require_once 'core/Router.php';   
 require_once 'app/models/Database.php';   
 require_once 'app/models/Blog.php';   
-require_once 'app/models/Single.php';   
+require_once 'app/models/Create.php';   
+require_once 'app/models/Read.php';   
+require_once 'app/models/Update.php';   
+require_once 'app/models/Delete.php';   
 require_once 'app/models/Image.php';   
 require_once 'app/controller/Controller.php';   
 require_once 'app/controller/ListController.php';   
-require_once 'app/controller/SingleController.php';   
+require_once 'app/controller/CreateController.php';   
+require_once 'app/controller/ReadController.php';   
+require_once 'app/controller/UpdateController.php';   
+require_once 'app/controller/DeleteController.php';   
 require_once 'helpers/functions.php';   
 
 // Router è la prima classe che deve essere istanziata perchè deve leggere l'url e indirizzarci verso la pagina/azione da noi richiesta
@@ -76,7 +83,6 @@ $controller = $router->dispatch();
 
 // e alla fine verrà caricato il template di default dell'intera pagina che sarà lo stesso per tutte le pagine
 $controller->display();
-
 
 
 ?>

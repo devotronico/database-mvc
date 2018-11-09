@@ -4,7 +4,7 @@ namespace app\models;
 use app\models\Database;
 use PDO; // importare la classe PDO per utilizzarla 
 
-class Single {
+class Create {
 
 
     private $conn;
@@ -19,78 +19,6 @@ class Single {
     
 
 
-
-
-  
-
-
-
-
-    /**
-     * RESET USERS
-     * 
-     * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id volutpat 
-     * orci. Etiam pharetra eget turpis non ultrices. Pellentesque vitae risus 
-     * sagittis, vehicula massa eget, tincidunt ligula.
-     *
-     * @access private
-     * @author Firstname Lastname
-     * @global object $post
-     * @param int $id Author ID
-     * @param string $type Type of photo
-     * @param int $width Photo width in px
-     * @param int $height Photo height in px
-     * @return object Photo
-     */
-    public function resetUsers(){
-        
-        $sql = 'TRUNCATE TABLE users';
-
-        $stmt = $this->conn->prepare($sql); 
-
-        $stmt->execute();
-        
-        $this->conn = null;
-    }
-
-
-
-
-
-
-
-    /**
-    * ALL USERS
-    * 
-    * Metodo `query()`: (http://php.net/manual/en/pdo.query.php) 
-    * Il metodo `query()` di PDO esegue un'istruzione SQL di tipo SELECT  
-    * e ritorna un oggetto PDOStatement del set di risultati.
-    * Eseguendo un fetchAll sull' oggetto PDOStatement viene restituita
-    * una matrice contenente tutte le righe del set di risultati
-    *
-    * @access private
-    * @author Daniele Manzi
-    * @return array di oggetti.
-    */
-    public function allUsers() {
-
-        $sql = "SELECT * FROM users";
-
-        if ($stmt = $this->conn->query($sql)) 
-        {
-        
-            if ($stmt->execute()) 
-            {
-               
-                $users = $stmt->fetchAll(PDO::FETCH_OBJ); // FETCH_ASSOC |  FETCH_OBJ
-             
-
-                return $users; // ritorna un array di oggetti
-            } else {
-                die("ERRORE");
-            }
-        }
-    }
 
 
 
@@ -158,6 +86,7 @@ class Single {
      */
     public function createUser(array $data=[]) {
 
+        $upddate = date('d-m-Y H:i');  // REG_DATE 
         $regdate = date('d-m-Y H:i');  // REG_DATE 
 
         foreach ( $data as $prop ) {
@@ -168,27 +97,32 @@ class Single {
             }
         }
 
-        $sql = 'INSERT INTO users (img, name, gender, email, country, color1, color2, level, look, birth, set_date, reg_date, cookie)
-        VALUES (:img, :name, :gender, :email, :country, :color1, :color2, :level, :look, :birth, :set_date, :reg_date, :cookie)';
+
+$sql = 'INSERT INTO users (img, name, gender, birth, fiscalcode,  tel, email, street, cap, city, country, color1, color2, level, look, set_date, upd_date, reg_date, info, cookie) 
+VALUES (:img, :name, :gender, :birth, :fiscalcode, :tel, :email, :street, :cap, :city, :country, :color1, :color2, :level, :look, :set_date, :upd_date,:reg_date, :info, :cookie)';
 
         $stmt = $this->conn->prepare($sql); 
 
         $stmt->bindParam(':img',        $data['imageName'], PDO::PARAM_STR, 32);
         $stmt->bindParam(':name',       $data['name'],      PDO::PARAM_STR, 32);
-        $stmt->bindParam(':gender',     $data['gender'],    PDO::PARAM_STR, 32);
-        $stmt->bindParam(':birth',      $data['birth'],     PDO::PARAM_STR, 32);
+        $stmt->bindParam(':gender',     $data['gender'],    PDO::PARAM_STR, 6);
+        $stmt->bindParam(':birth',      $data['birth'],     PDO::PARAM_STR, 10);
         $stmt->bindParam(':fiscalcode', $data['fiscalcode'],PDO::PARAM_STR, 16);
-        $stmt->bindParam(':tel',        $data['tel'],       PDO::PARAM_STR, 16);
-        $stmt->bindParam(':email',      $data['email'],     PDO::PARAM_STR, 32);
+        $stmt->bindParam(':tel',        $data['tel'],       PDO::PARAM_STR, 15);
+        $stmt->bindParam(':email',      $data['email'],     PDO::PARAM_STR, 255);
+        $stmt->bindParam(':street',     $data['street'],    PDO::PARAM_STR, 16);
+        $stmt->bindParam(':cap',        $data['cap'],       PDO::PARAM_STR, 10);
+        $stmt->bindParam(':city',       $data['city'],      PDO::PARAM_STR, 16);
         $stmt->bindParam(':country',    $data['country'],   PDO::PARAM_STR, 32);
-        $stmt->bindParam(':color1',     $data['color1'],    PDO::PARAM_STR, 16);
-        $stmt->bindParam(':color2',     $data['color2'],    PDO::PARAM_STR, 16);
-        $stmt->bindParam(':level',      $data['level'],     PDO::PARAM_STR, 16);
+        $stmt->bindParam(':color1',     $data['color1'],    PDO::PARAM_STR, 7);
+        $stmt->bindParam(':color2',     $data['color2'],    PDO::PARAM_STR, 7);
+        $stmt->bindParam(':level',      $data['level'],     PDO::PARAM_STR, 3);
         $stmt->bindParam(':look',       $data['look'],      PDO::PARAM_STR, 16);
-        $stmt->bindParam(':set_date',   $data['set_date'],  PDO::PARAM_STR, 32);
-        $stmt->bindParam(':reg_date',   $regdate,           PDO::PARAM_STR, 32);
-        $stmt->bindParam(':info',       $data['info'],      PDO::PARAM_STR, 16);
-        $stmt->bindParam(':cookie',     $data['cookie'],    PDO::PARAM_STR, 32);
+        $stmt->bindParam(':set_date',   $data['set_date'],  PDO::PARAM_STR, 19);
+        $stmt->bindParam(':upd_date',   $upddate,           PDO::PARAM_STR, 19);
+        $stmt->bindParam(':reg_date',   $regdate,           PDO::PARAM_STR, 19);
+        $stmt->bindParam(':info',       $data['info'],      PDO::PARAM_STR, 150);
+        $stmt->bindParam(':cookie',     $data['cookie'],    PDO::PARAM_STR, 16);
 
         return $stmt->execute();
     }
@@ -201,113 +135,9 @@ class Single {
 
 
 
-    /**
-     * SINGLE USER
-     * 
-     * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id volutpat 
-     * orci. Etiam pharetra eget turpis non ultrices. Pellentesque vitae risus 
-     * sagittis, vehicula massa eget, tincidunt ligula.
-     *
-     * @access private
-     * @author Firstname Lastname
-     * @global object $post
-     * @param int $id Author ID
-     * @param string $type Type of photo
-     * @param int $width Photo width in px
-     * @param int $height Photo height in px
-     * @return object Photo
-     */
-    public function singleUser($id, $type) {
-
-        $sql = "SELECT * FROM users WHERE id = $id";
-
-        if ($stmt = $this->conn->query($sql)) 
-        {
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT, 255);
-
-            if ($stmt->execute()) 
-            {
-                   
-                $user = $stmt->fetch(PDO::FETCH_OBJ); // FETCH_ASSOC  |   FETCH_OBJ
-
-                switch ( $type ) {
-
-                    case "read":
-                    //   
-                    break;
-                    case "update":
-
-                        $user->birth = $this->getDateBirth($user->birth);
-
-                        $user->set_date = $this->getDatetimeLocal('update', $user->set_date);
-                        
-                        $user->reg_date = $this->getDatetimeLocal('update', $user->reg_date);
-                    break;
-                   // case "delete":  break;
-                }
-           
-                $user->img = "/image/avatar/".$user->img;
-                return $user;
-
-            } else {
-
-                die("ERRORE");
-            }
-        }
-    }
 
 
 
-
-
-
-
-/***************************************************************************************|
-* UPDATE                                                                                |
-* Modifica un post creato in precedenza                                                 |
-* image = COALESCE(NULLIF(:image, ''),image),
-****************************************************************************************/
-public function updateUser(int $id, array $data=[]){
-        
-    // CANCELLARE IMMAGINE
-    //$data['imageName'] = !is_null($data['imageName']) ? $data['imageName'] : 'avatar-default.png';
-
-
-    // DATE
-    $data['birth'] = $this->getDateBirth($data['birth']);
-    $data['set_date'] = $this->getDatetimeLocal('create', $data['set_date']);
-    $data['reg_date'] = $this->getDatetimeLocal('create', $data['reg_date']);
-                        
-
-    // if ( isset( $data['imageName'] ))   { echo '<pre>';print_r( $data['imageName'] );'</pre>'; }
-   
-
-    $sql = "UPDATE users
-    SET img = COALESCE(NULLIF(:img, ''),img), name = :name, gender = :gender, email = :email, country = :country,
-    color = :color, level = :level, look = :look, birth = :birth, set_date = :set_date, reg_date = :reg_date, cookie = :cookie 
-    WHERE id = :id";
-
-    $stmt = $this->conn->prepare($sql);
-
-    $stmt->bindParam(':id',         $id,                PDO::PARAM_INT, 255);
-    $stmt->bindParam(':img',        $data['imageName'], PDO::PARAM_STR, 32);
-    $stmt->bindParam(':name',       $data['name'],      PDO::PARAM_STR, 32);
-    $stmt->bindParam(':gender',     $data['gender'],    PDO::PARAM_STR, 32);
-    $stmt->bindParam(':email',      $data['email'],     PDO::PARAM_STR, 32);
-    $stmt->bindParam(':country',    $data['country'],   PDO::PARAM_STR, 32);
-    $stmt->bindParam(':color1',     $data['color1'],    PDO::PARAM_STR, 32);
-    $stmt->bindParam(':color2',     $data['color2'],    PDO::PARAM_STR, 32);
-    $stmt->bindParam(':level',      $data['level'],     PDO::PARAM_STR, 32);
-    $stmt->bindParam(':look',       $data['look'],      PDO::PARAM_STR, 32);
-    $stmt->bindParam(':birth',      $data['birth'],     PDO::PARAM_STR, 32);
-    $stmt->bindParam(':set_date',   $data['set_date'],  PDO::PARAM_STR, 32);
-    $stmt->bindParam(':reg_date',   $data['reg_date'],  PDO::PARAM_STR, 32);
-    $stmt->bindParam(':cookie',     $data['cookie'],    PDO::PARAM_STR, 32);
-    
-    $stmt->execute();
-    $stmt = null;
-    return true;
- }
 
 
 
@@ -404,25 +234,6 @@ public function setImageDefault(int $id){
         } 
     }
 // CHIUDE UPDATE
-
-
-
-
-
-
-
-
-
- public function deleteUser(int $id){
-        
-    $sql = 'DELETE FROM users WHERE id = :id';
-    $stmt = $this->conn->prepare($sql); 
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT); 
-    $stmt->execute(); 
-    return $stmt->rowCount();
- }
-
-
 
 
 

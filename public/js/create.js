@@ -1,63 +1,25 @@
+import{postRequest} from "./module/request.js";// <--import deve andare prima dell evento 'DOMContentLoaded'
 
-document.querySelector('.btn-canc-img').addEventListener('click', function(event){
+document.addEventListener('click', function(event){
 
+  if ( event.target.classList.item(3) == 'btn-canc-img' ) {
 
-
-
-  event.preventDefault()
-
-
-  console.log(event.target.pathname);  
-  const pathname = event.target.pathname; //  /delete/image/3
-  const tokens = pathname.split('/'); 
-  const path = tokens[1]+'/'+tokens[2];
-  const id = tokens[3];
-  console.log(path);    
-  console.log(id); 
-
-  ajax_post();
-
-  function ajax_post(){
-  
-    var hr = new XMLHttpRequest();
- 
-    var url = pathname; // "index.php"  // "my_parse_file.php";
-
-    var vars = path; //  /delete/image/3
-    hr.open("POST", url, true);
-    // Set content type header information for sending url encoded variables in the request
-    hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    // Access the onreadystatechange event for the XMLHttpRequest object
-    hr.onreadystatechange = function() {
-
-	    if(hr.readyState == 4 && hr.status == 200) {
-
-        var return_data = hr.responseText;
-  console.log(return_data); 
-        
-			  document.getElementById("status").innerHTML = return_data;
-	    }
-    }
-    // Send the data to PHP now... and wait for response to update the status div
-    hr.send(); // Actually execute the request
-    document.getElementById("status").innerHTML = "processing...";
-}
-
+    event.preventDefault()
+    
+    const pathname = event.target.pathname; //  /delete/image/3
+    postRequest(pathname);
+  }
 
 
 });
-/*
-document.createElement('.test').addEventListener('click', function(e){
-
-//e.preventDefault();
-  console.log(e);
-});
 
 
-*/
+var p = document.getElementById("level"),
+    res = document.getElementById("level-result");
 
-
-
+p.addEventListener("input", function() {
+    res.innerHTML = "$" + p.value;
+}, false); 
 
 
 

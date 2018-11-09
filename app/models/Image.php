@@ -5,19 +5,19 @@ namespace app\models;
 
 class Image {
 
-    private $message; // messaggio di errore
-    private $fileName; // nome del file caricato
-    private $fileType; // il tipo/estensione del file
-    private $fileTmpName; // posizione temporanea del file quando viene caricato
+    private $message;       // messaggio di errore
+    private $fileName;      // nome del file caricato
+    private $fileType;      // il tipo/estensione del file
+    private $fileTmpName;   // posizione temporanea del file quando viene caricato
     private $fileExtension; // estensione del file es. jpg, jpeg, png, gif, etc.. che otteniamo noi per sicurezza
-    private $fileNewName; // rinominiamo il file in un formato più adatto  per essere memorizzato nel database
-    private $img_resource; // è una risorsa/copia del file originale sul quale andremo a fare le modifiche e salvarlo
-    private $scaleType; // tipo di ridimensionamento da applicare all'immagine
-    private $img_width; // larghezza del' immagine
-    private $img_height; // laltezza del' immagine
-    private $max_width; // massima larghezza del file da noi accettato
-    private $max_height;  // massima altezza del file da noi accettato
-    private $folder; // 'public/img/avatar/'; // percorso del file dove andremo a salvarlo
+    private $fileNewName;   // rinominiamo il file in un formato più adatto  per essere memorizzato nel database
+    private $img_resource;  // è una risorsa/copia del file originale sul quale andremo a fare le modifiche e salvarlo
+    private $scaleType;     // tipo di ridimensionamento da applicare all'immagine
+    private $img_width;     // larghezza del' immagine
+    private $img_height;    // laltezza del' immagine
+    private $max_width;     // massima larghezza del file da noi accettato
+    private $max_height;    // massima altezza del file da noi accettato
+    private $folder;        // 'public/img/avatar/'; // percorso del file dove andremo a salvarlo
  
 
 public function __construct(string $scaleType, int $max_width, int $max_height, int $max_size, string $folder, array $data ){
@@ -26,7 +26,7 @@ public function __construct(string $scaleType, int $max_width, int $max_height, 
   
     switch ( $data['file']['error'] ) {
 
-        case 0: //die('Value: 0; There is no error, the file uploaded with success.');
+        case 0: //die('Value: 0; NESSUN ERRORE, Il file è stato caricato con successo.');
             if ( is_uploaded_file($data['file']['tmp_name']) ) { //die('Caricato');
           
     
@@ -60,7 +60,7 @@ public function __construct(string $scaleType, int $max_width, int $max_height, 
             
         break;
         
-        case 1: // die('Value: 1; The uploaded file exceeds the upload_max_filesize directive in php.ini.');  
+        case 1: // die('Value: 1; Il file caricato supera il valore di upload_max_filesize directive in php.ini.');  
             
             /***********************************************************************************************************************************|
             * ATTENZIONE                                                                                                                        |                                                 

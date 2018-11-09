@@ -1,38 +1,24 @@
 <?php
 namespace app\controller;
 
-use app\models\Single;
+use app\models\Create;
 use app\models\Image;
 
 
-class SingleController extends Controller {
+class CreateController extends Controller {
 
   
-    private $singleClass;
+    private $createClass;
 
 
     public function __construct() {
 
-        $this->singleClass = new Single;
+        $this->createClass = new Create;
         
     }
    
     
 
- //-----------------------------------------------------------------------------|
-    /**
-     * DELETE IMAGE  {AJAX}
-     * 
-     * 
-     * @access public
-     * @return string
-     */
-    public function deleteImage($id) {
-
-        $this->singleClass->deleteImage($id); // cancella vecchia immagine
-        $this->singleClass->setImageDefault($id); // cancella vecchia immagine
-       die('../image/avatar/avatar-default.png');
-    }
 
 
  //-----------------------------------------------------------------------------|
@@ -111,7 +97,6 @@ class SingleController extends Controller {
     }
 
 
-
 /**
  * STORE
  * 
@@ -140,13 +125,13 @@ class SingleController extends Controller {
 
         if ( !isset( $_POST['cookie'] )) {
 
-            $data = array_merge(array("imageName"=>$imageName, "cookie"=>false),  $data); 
+            $data = array_merge(array("imageName"=>$imageName, "cookie"=>false), $data); 
         } else {
 
-            $data = array_merge(array("imageName"=>$imageName),  $data); 
+            $data = array_merge(array("imageName"=>$imageName), $data); 
         }
 
-        $success = $this->singleClass->createUser($data);
+        $success = $this->createClass->createUser($data);
         
         if ( $success ) {
             
@@ -164,117 +149,10 @@ class SingleController extends Controller {
 
 
 
-    //-----------------------------------------------------------------------------|
-    /**
-     * READ  {cRud}
-     * 
-     *  Mostra un solo utente con maggiori dettagli rispetto alla lista utenti
-     * 
-     * @param int $id:      user ID
-     * @param string $type: tipo di select da eseguire con il metodo `singleUser()`
-     * @access public
-     * @return null
-     */
-    public function read($id) {
-
-        $user = $this->singleClass->singleUser($id, "read");
-
-     
-        $files=['navbar', 'read'];
-        $this->template = _view($files, compact('user'));
-    }
-
-
-
-
-
-
-
-
-    //-----------------------------------------------------------------------------|
-    /**
-     * UPDATE    -- crUd --
-     * 
-     *  Mostra un solo utente con tutti i suoi dati ( tutti i campi del database )
-     *  che possono essere modificati e memorizzati nel databse.
-     *  `update()`: Carica il template(html, php) del form il cui metodo è POST
-     *  `edit()`:  Immagazzina nel database i dati modificati nei campi di input ->
-     *              del form e riporta l' utente alla pagina della lista degli users
-     * 
-     * @param int $id:      user ID
-     * @param string $type: tipo di select da eseguire con il metodo `singleUser()`
-     * @access public
-     * @return null
-     */
-    public function update($id) {
-
-        $user = $this->singleClass->singleUser($id, "update");
-      
-        $files=['navbar', 'update'];
-
-        $this->template = _view($files, compact('user'));
-    }
-
-   
-
-
-    public function edit($id) {
-
-        $data = filter_var_array($_POST, FILTER_SANITIZE_STRING);
-        
-        if ( $_FILES['file']['error'] !== 4 ) {  // se è stata caricata una nuova immagine senza errori
-            
-            $this->singleClass->deleteImage($id); // cancella vecchia immagine se diversa da quella di default o da quella precedentemente caricata
-            
-            $imageName = $this->setImage(); // ritorna o un nuovo nomedi immagine oppure il nome di default del immagine
-
-            $data = array_merge(array("imageName"=>$imageName),  $data); // inseriamo nell'array anche la proprietà "imageName"  con il valore $imageName
-        }
-
-
-        $success = $this->singleClass->updateUser($id, $data);
-      
-        if ( $success ) {
-
-            $message = "Un Utente è stato aggiornato";
     
-            _redirect('/', $message);
-        }
-    }
 
 
 
-
-
-
-
-
-
-
-    //-----------------------------------------------------------------------------|
-    /**
-     * DELETE    -- cruD --
-     * 
-     * Cancella un solo utente ( una riga della tabella) con tutti i suoi -> 
-     * dati ( tutti i campi della tabella ) che può essere eliminato
-     * 
-     * 
-     * @param int $id:      user ID
-     * @access public
-     * @return null
-     */
-    public function delete($id) {
-
-        $success = $this->singleClass->deleteUser($id);
-
-        if ( $success ) {
-
-            $message = "Utente eliminato con successo";
-
-            _redirect('/', $message);
-        }
-
-    }
 
 
 } // Chiude la Classe

@@ -32,6 +32,18 @@
         <td><?=$user->gender?></td>
       </tr>
       <tr>
+        <th scope="row">birth</th>
+        <td><?=$user->birth?></td>
+      </tr>
+      <tr>
+        <th scope="row">fiscalcode</th>
+        <td><?=$user->fiscalcode?></td>
+      </tr>
+      <tr>
+        <th scope="row">telephone</th>
+        <td><?=$user->tel?></td>
+      </tr>
+      <tr>
         <th scope="row">email</th>
         <td><?=$user->email?></td>
       </tr>
@@ -40,16 +52,40 @@
         <td><?=$user->country?></td>
       </tr>
       <tr>
-        <th scope="row">birth</th>
-        <td><?=$user->birth?></td>
+        <th scope="row">color 1</th>
+        <td><?=$user->color1?></td>
+      </tr>
+      <tr>
+        <th scope="row">color 2</th>
+        <td><?=$user->color2?></td>
+      </tr>
+      <tr>
+        <th scope="row">level</th>
+        <td><?=$user->level?></td>
+      </tr>
+      <tr>
+        <th scope="row">look</th>
+        <td><?=$user->look?></td>
       </tr>
       <tr>
         <th scope="row">set_date</th>
         <td><?=$user->set_date?></td>
       </tr>
       <tr>
+        <th scope="row">upd_date</th>
+        <td><?=$user->upd_date?></td>
+      </tr>
+      <tr>
         <th scope="row">reg_date</th>
         <td><?=$user->reg_date?></td>
+      </tr>
+      <tr>
+        <th scope="row">info</th>
+        <td><?=$user->info?></td>
+      </tr>
+      <tr>
+        <th scope="row">cookie</th>
+        <td><?=$user->cookie?></td>
       </tr>
       </tbody>
       </table>

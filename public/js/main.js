@@ -57,6 +57,7 @@ function downloadJSAtOnload () {
 
         case 'create':
         case 'update':
+            element.setAttribute('type', 'module'); 
             element.setAttribute('src', '/js/create.js'); 
         break;
 
