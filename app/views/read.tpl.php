@@ -1,6 +1,6 @@
 
 <main>
-  <div class="row">
+  <div class="row mt-5">
     <div class="col-4">
       <div class='profile__img__box text-center'>
         <img class='profile__img' src="<?=$user->img?>" alt="avatar personale">
@@ -53,11 +53,17 @@
       </tr>
       <tr>
         <th scope="row">color 1</th>
-        <td><?=$user->color1?></td>
+        <td>
+          <span style="position:relative;top:2px;display:inline-block;width:80px;height:15px;background-color:<?=$user->color1?>;text-align:center;"></span>
+          <?=$user->color1?>
+        </td>
       </tr>
       <tr>
         <th scope="row">color 2</th>
-        <td><?=$user->color2?></td>
+        <td>
+          <span style="position:relative;top:2px;display:inline-block;width:80px;height:15px;background-color:<?=$user->color2?>;text-align:center;"></span>
+          <?=$user->color2?>
+        </td>
       </tr>
       <tr>
         <th scope="row">level</th>
@@ -85,7 +91,8 @@
       </tr>
       <tr>
         <th scope="row">cookie</th>
-        <td><?=$user->cookie?></td>
+   
+        <td><?= empty( $user->cookie )? 'NO' : $user->cookie?></td>
       </tr>
       </tbody>
       </table>

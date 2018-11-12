@@ -51,11 +51,10 @@ class Update {
                    
                 $user = $stmt->fetch(PDO::FETCH_OBJ); // FETCH_ASSOC  |   FETCH_OBJ
 
-                $user->birth = $this->getDateBirth($user->birth);
+                // $user->birth = $this->getDateBirth($user->birth);
 
                 $user->set_date = $this->getDatetimeLocal('update', $user->set_date);
                 
-                $user->reg_date = $this->getDatetimeLocal('update', $user->reg_date);
         
                 $user->img = "/image/avatar/".$user->img;
                 return $user;
@@ -77,20 +76,22 @@ class Update {
 * Modifica un post creato in precedenza                                                 |
 * image = COALESCE(NULLIF(:image, ''),image),
 ****************************************************************************************/
-public function updateUser(int $id, array $data=[]){
-        
+public function updateUser(int $id, array $data=[]) {
 
-    // DATE
-    $data['birth'] = $this->getDateBirth($data['birth']);
-    $data['set_date'] = $this->getDatetimeLocal('create', $data['set_date']);
-    $data['reg_date'] = $this->getDatetimeLocal('create', $data['reg_date']);
+//    2017-12-01T23:59
+// date('Y-m-d\TH:i', strtotime($date));
+// <?php $date = "2011-12-05 10:13 AM";
+// if ( isset( $data['set_date'] )) { var_dump( $data['set_date'] ); echo '<pre>';print_r( $data['set_date'] ); die(); }
+// 2017-12-01T23:59
+// DATE
+// $data['birth'] = $this->getDateBirth($data['birth']);
+// $data['set_date'] = $this->getDatetimeLocal('create', $data['set_date']);
+// $data['reg_date'] = $this->getDatetimeLocal('create', $data['reg_date']);
                         
-
-
     $sql = "UPDATE users
     SET img = COALESCE(NULLIF(:img, ''),img), name = :name, gender = :gender, birth = :birth, fiscalcode = :fiscalcode,
     tel = :tel, email = :email, street = :street, cap = :cap, city = :city, country = :country, color1 = :color1,
-    color2 = :color2, level = :level, look = :look, set_date = :set_date, reg_date = :reg_date, info = :info, cookie = :cookie 
+    color2 = :color2, level = :level, look = :look, set_date = :set_date, upd_date = NOW(), info = :info, cookie = :cookie 
     WHERE id = :id";
 
     $stmt = $this->conn->prepare($sql);
@@ -112,7 +113,6 @@ public function updateUser(int $id, array $data=[]){
     $stmt->bindParam(':level',      $data['level'],     PDO::PARAM_STR, 32);
     $stmt->bindParam(':look',       $data['look'],      PDO::PARAM_STR, 32);
     $stmt->bindParam(':set_date',   $data['set_date'],  PDO::PARAM_STR, 32);
-    $stmt->bindParam(':reg_date',   $data['reg_date'],  PDO::PARAM_STR, 32);
     $stmt->bindParam(':info',       $data['info'],      PDO::PARAM_STR, 32);
     $stmt->bindParam(':cookie',     $data['cookie'],    PDO::PARAM_STR, 32);
     
@@ -147,7 +147,7 @@ public function updateUser(int $id, array $data=[]){
 
             $user = $stmt->fetch(PDO::FETCH_OBJ);
 
-            if ( $user->img != 'avatar-default.png' ) {
+            if ( $user->img != 'avatar__default.png' ) {
 
                 unlink("public/image/avatar/".$user->img);
             }
@@ -195,17 +195,7 @@ private function getDatetimeLocal( string $type, string $datetime){
 
 
 
-private function getDateBirth(string $datebirth){
-    // BIRTH
-    // dal form la data arriva in questo formato: 2000-12-30
-    // ma la cambiamo in questo formato: 30-12-2000
-    if ( empty($datebirth) ) {  return false; }
-    // if ( empty($datebirth) ) {  return '00-00-0000'; }
 
-    $exp = explode("-", $datebirth); // [0] = 1964   [1] = 09    [2] = 20
-    $datebirth = $exp[2]."-".$exp[1]."-".$exp[0];
-    return $datebirth;
-}
 // chiude DATE
 
 

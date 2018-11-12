@@ -86,8 +86,12 @@ class Create {
      */
     public function createUser(array $data=[]) {
 
-        $upddate = date('d-m-Y H:i');  // REG_DATE 
-        $regdate = date('d-m-Y H:i');  // REG_DATE 
+        // $upddate = date('d-m-Y H:i');  // REG_DATE 
+       // $upddate = time(); // 1541839549 
+       // $regdate = date('d-m-Y H:i');  // REG_DATE 
+
+
+        //$regdate = time(); // 1541839549 
 
         foreach ( $data as $prop ) {
 
@@ -99,7 +103,7 @@ class Create {
 
 
 $sql = 'INSERT INTO users (img, name, gender, birth, fiscalcode,  tel, email, street, cap, city, country, color1, color2, level, look, set_date, upd_date, reg_date, info, cookie) 
-VALUES (:img, :name, :gender, :birth, :fiscalcode, :tel, :email, :street, :cap, :city, :country, :color1, :color2, :level, :look, :set_date, :upd_date,:reg_date, :info, :cookie)';
+VALUES (:img, :name, :gender, :birth, :fiscalcode, :tel, :email, :street, :cap, :city, :country, :color1, :color2, :level, :look, :set_date, NOW(), NOW(), :info, :cookie)';
 
         $stmt = $this->conn->prepare($sql); 
 
@@ -119,8 +123,8 @@ VALUES (:img, :name, :gender, :birth, :fiscalcode, :tel, :email, :street, :cap, 
         $stmt->bindParam(':level',      $data['level'],     PDO::PARAM_STR, 3);
         $stmt->bindParam(':look',       $data['look'],      PDO::PARAM_STR, 16);
         $stmt->bindParam(':set_date',   $data['set_date'],  PDO::PARAM_STR, 19);
-        $stmt->bindParam(':upd_date',   $upddate,           PDO::PARAM_STR, 19);
-        $stmt->bindParam(':reg_date',   $regdate,           PDO::PARAM_STR, 19);
+        //$stmt->bindParam(':upd_date',   $upddate,           PDO::PARAM_STR, 19);
+        //$stmt->bindParam(':reg_date',   $regdate,           PDO::PARAM_STR, 19);
         $stmt->bindParam(':info',       $data['info'],      PDO::PARAM_STR, 150);
         $stmt->bindParam(':cookie',     $data['cookie'],    PDO::PARAM_STR, 16);
 
@@ -149,7 +153,7 @@ VALUES (:img, :name, :gender, :birth, :fiscalcode, :tel, :email, :street, :cap, 
 ****************************************************************************************/
 public function setImageDefault(int $id){
         
-    $imageName = 'avatar-default.png';
+    $imageName = 'avatar__default.png';
                            
     $sql = "UPDATE users SET img = :img WHERE id = :id";
 
@@ -191,7 +195,7 @@ public function setImageDefault(int $id){
 
             $user = $stmt->fetch(PDO::FETCH_OBJ);
 
-            if ( $user->img != 'avatar-default.png' ) {
+            if ( $user->img != 'avatar__default.png' ) {
 
                 unlink("public/image/avatar/".$user->img);
             }
@@ -219,7 +223,7 @@ public function setImageDefault(int $id){
 
             $user = $stmt->fetch(PDO::FETCH_OBJ);
 
-            if ( $user->img != 'avatar-default.png' ) {
+            if ( $user->img != 'avatar__default.png' ) {
 
                 $filename = "/image/avatar/".$user->img;
 

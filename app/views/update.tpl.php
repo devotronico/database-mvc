@@ -1,28 +1,36 @@
 <main>
 
-  <div class="row">
+  <div class="row my-5">
     <div class="col-md-4">
-        <div class='profile__img__box text-center'>
+     <!-- IMMAGINE -->
+        <div class='profile__img__box'>
         <?php if ( $user->img !== "/image/avatar/avatar-default.png") : ?>
           <a class="btn btn-danger form-btn btn-canc-img" href="/delete/image/<?=$user->id?>">&#128473;</a>
         <?php endif ;?>
           <img class='profile__img' src="<?=$user->img?>" alt="avatar personale">
         </div>
-         
+        <div class='profile__buttons text-center'>
+          <a class="btn btn-success my-2 form-btn" href="/read/<?=$user->id?>">&#128472;read</a>
+          <a class="btn btn-danger my-2 form-btn" href="/delete/<?=$user->id?>">&#128473;delete</a>
       </div>
+          <!-- END IMMAGINE -->
+      </div>
+
+
+
+
     <div class="col-md-8">
       <form action="/edit/<?=$user->id?>" method="POST" enctype="multipart/form-data">
 
-        <!-- IMMAGINE -->
-        <div class="form-group">
-            <label for="image">Immagine</label>
-            <input type="hidden" name="MAX_FILE_SIZE" value="500000" />
-            <input type="file" class="form-control-file" name="file" id="image" size="500000" accept="jpg jpeg"> 
-            <small class="form-create__info">il file deve essere minore di 0.5 megabytes</small>
-            <div class="preview"></div>
-        </div>
-        <!-- END IMMAGINE -->
-
+        <!-- FILE IMMAGINE -->
+      <div class="custom-file mb-5">
+        <input type="hidden" name="MAX_FILE_SIZE" value="500000" />
+        <input type="file" class="custom-file-input" id="image" name="file">
+        <label class="custom-file-label" for="image">image file...</label>
+        <small class="form-create__info">il file deve essere minore di 0.5 megabytes</small>
+        <div class="preview"></div>
+      </div>
+        <!-- END FILE IMMAGINE -->
 
     <div class="form-row">
       <div class="form-group col-md-4">
@@ -165,24 +173,25 @@
         <!--  SET DATA -->
         <div class="form-group">
           <label for="set_date">Setting date</label>
-          <input type="datetime-local" class="form-control" id="set_date" name="set_date" value="<?=$user->set_date?>" aria-describedby="set_date">
+          <input type="datetime-local" class="form-control" id="set_date" name="set_date" value="<?= date('Y-m-d\TH:i', strtotime($user->set_date)) ?>" aria-describedby="set_date">
+          <!-- <input type="datetime-local" class="form-control" id="set_date" name="set_date" value="<?php echo date('Y-m-d\TH:i', strtotime($user->set_date)); ?>" aria-describedby="set_date"> -->
         </div>
         <!-- END SET DATA -->
       </div>
       <div class="form-group col-md-4">
         <!--  UPDATE DATA -->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="upd_date">Update date</label>
           <input type="datetime-local" class="form-control" id="upd_date" name="upd_date" value="<?=$user->upd_date?>" aria-describedby="upd_date" readonly>
-        </div>
+        </div> -->
         <!-- END UPDATE DATA -->
       </div>
       <div class="form-group col-md-4">
         <!--  REGISTRATION DATA -->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="reg_date">Registration date</label>
           <input type="datetime-local" class="form-control" id="reg_date" name="reg_date" value="<?=$user->reg_date?>" aria-describedby="reg_date" readonly>
-        </div>
+        </div> -->
         <!-- END REGISTRATION DATA -->
       </div>
     </div>

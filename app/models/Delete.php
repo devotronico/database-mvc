@@ -74,7 +74,7 @@ class Delete {
 ****************************************************************************************/
 private function setImageDefault(int $id){
         
-    $imageName = 'avatar-default.png';
+    $imageName = 'avatar__default.png';
                            
     $sql = "UPDATE users SET img = :img WHERE id = :id";
 

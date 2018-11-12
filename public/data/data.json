@@ -1,9 +1,9 @@
 [
     {
-        "img": "dan.jpg",
+        "img": "avatar__dan.jpg",
         "name": "Daniele",
         "gender": "male",
-        "birth": "27-01-1967",
+        "birth": "1983-10-15",
         "fiscalcode": "mnzdnl83r15h931h",
         "tel": "3331060677",
         "email": "dmanzi83@hotmail.it",
@@ -16,13 +16,13 @@
         "colors": ["red", "yellow"],
         "level": "5",
         "look": "adult",
-        "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus egestas, nibh quis scelerisque feugiat, metus ex facilisis enim, at posuere neque li."
+        "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
     },
     {
-        "img": "robot.jpg",
+        "img": "avatar__robot.jpg",
         "name": "Robot",
         "gender": "male",
-        "birth": "10-01-1010",
+        "birth": "1010-10-01",
         "fiscalcode": "CYBRBT00A01L219B",
         "tel": "1011010010",
         "email": "robot@hotgear.it",
@@ -35,13 +35,13 @@
         "colors":["blue", "gray"],
         "level": "25",
         "look": "old",
-        "info": "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin sed sapien sit amet est rhoncus interdum sodales ve."
+        "info": "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
     },
     {
-        "img": "alien.png",
+        "img": "avatar__alien.png",
         "name": "Alien",
         "gender": "male",
-        "birth": "27-01-1977",
+        "birth": "1977-02-27",
         "fiscalcode": "XNELNA77A27F205P",
         "tel": "3335272899",
         "email": "alien@xenomail.net",
@@ -54,13 +54,13 @@
         "colors": ["black", "green"],
         "level": "76",
         "look": "young",
-        "info": "Donec dapibus sapien tellus, id sagittis justo volutpat vel. Integer id tellus ac erat gravida viverra. In blandit felis lectus, quis rutrum est hend."
+        "info": "Donec dapibus sapien tellus, id sagittis justo volutpat vel. Integer id tellus ac erat gravida viverra."
     },
     {
-        "img": "skeleton.png",
+        "img": "avatar__skeleton.png",
         "name": "Skeleton",
         "gender": "male",
-        "birth": "13-11-1900",
+        "birth": "1900-11-13",
         "fiscalcode": "BNOSLT00S13D612G",
         "tel": "3339090909",
         "email": "skeleton@bone.net",
@@ -73,13 +73,13 @@
         "colors": ["black", "white"],
         "level": "36",
         "look": "old",
-        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis. Pellentesque euismod leo tempus auctor venenatis. Aliquam."
+        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis."
     },
     {
-        "img": "unknown.png",
+        "img": "avatar__unknown.png",
         "name": "Unknown",
         "gender": "",
-        "birth": "13-11-1900",
+        "birth": "1940-06-14",
         "fiscalcode": "BNOSLT00S13D612G",
         "tel": "3332222222",
         "email": "skeleton@bone.net",
@@ -92,7 +92,102 @@
         "colors": ["transparent", "transparent"],
         "level": "0",
         "look": "old",
-        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis. Pellentesque euismod leo tempus auctor venenatis. Aliquam."
+        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis."
+    },
+    {
+        "img": "avatar__jessica.jpg",
+        "name": "Jessica",
+        "gender": "female",
+        "birth": "2010-03-04",
+        "fiscalcode": "BNOSLT00S13D612G",
+        "tel": "8890000144",
+        "email": "jessica@sexy.net",
+        "address": {
+            "street": "unknow",
+            "cap": "88888",
+            "city": "Sexcity",
+            "country": "Sexyland"
+        },
+        "colors": ["pink", "violet"],
+        "level": "69",
+        "look": "young",
+        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis."
+    },
+    {
+        "img": "avatar__orso.jpg",
+        "name": "Orso",
+        "gender": "male",
+        "birth": "2002-07-08",
+        "fiscalcode": "BNOSLT00S13D612G",
+        "tel": "8890000144",
+        "email": "orso@brown.net",
+        "address": {
+            "street": "Sentiero",
+            "cap": "12345",
+            "city": "Bosco",
+            "country": "Foresta"
+        },
+        "colors": ["brown", "orange"],
+        "level": "48",
+        "look": "adult",
+        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis."
+    },
+    {
+        "img": "avatar__broli.jpg",
+        "name": "Broli",
+        "gender": "male",
+        "birth": "2005-10-10",
+        "fiscalcode": "BNOSLT00S13D612G",
+        "tel": "8890000144",
+        "email": "broli@thedog.net",
+        "address": {
+            "street": "dei cuccioli",
+            "cap": "98765",
+            "city": "Piazzolla",
+            "country": "Italy"
+        },
+        "colors": ["brown", "orange"],
+        "level": "48",
+        "look": "child",
+        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis."
+    },
+    {
+        "img": "avatar__cyborg.png",
+        "name": "Cyborg",
+        "gender": "male",
+        "birth": "2007-09-20",
+        "fiscalcode": "BNOSLT00S13D612G",
+        "tel": "0101010101",
+        "email": "cyborg@tech.net",
+        "address": {
+            "street": "techstreet",
+            "cap": "01010",
+            "city": "techcity",
+            "country": "techland"
+        },
+        "colors": ["gray", "purple"],
+        "level": "21",
+        "look": "old",
+        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis."
+    },
+    {
+        "img": "avatar__mummy.png",
+        "name": "Mummy",
+        "gender": "male",
+        "birth": "1000-06-22",
+        "fiscalcode": "BNOSLT00S13D612G",
+        "tel": "0101010101",
+        "email": "mummy@tomb.net",
+        "address": {
+            "street": "oldstreet",
+            "cap": "99999",
+            "city": "Cairo",
+            "country": "Egypt"
+        },
+        "colors": ["yellow", "brown"],
+        "level": "65",
+        "look": "old",
+        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis."
     }
 ]
 

@@ -53,20 +53,18 @@ class UpdateController extends Controller {
     private function setImage() {
 
         if ( !isset($_FILES) || !isset($_FILES['file']) ) { 
-            return 'avatar-default.png'; 
+            return 'avatar__default.png'; 
         }
 
         $Image = new Image('normal', 0, 0, 500000, 'avatar', $_FILES);
 
         if ( !empty( $Image->getMessage()) ){ // se si è verificato un errore...
             
-            return 'avatar-default.png'; 
+            return 'avatar__default.png'; 
         }
         // Se il file è stato caricato senza errori restituisce il nuovo nome del file, es.: 5be1c89d2513d3.2
         return $Image->getNewImageName();  
     }
-
-
 
 
 
@@ -156,3 +154,4 @@ class UpdateController extends Controller {
  * @param int $height Photo height in px
  * @return object Photo
  */
+

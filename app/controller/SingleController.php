@@ -31,7 +31,7 @@ class SingleController extends Controller {
 
         $this->singleClass->deleteImage($id); // cancella vecchia immagine
         $this->singleClass->setImageDefault($id); // cancella vecchia immagine
-       die('../image/avatar/avatar-default.png');
+       die('../image/avatar/avatar__default.png');
     }
 
 
@@ -90,12 +90,12 @@ class SingleController extends Controller {
     private function setImage() {
 
         if ( !isset($_FILES) || !isset($_FILES['file']) ) { 
-            return 'avatar-default.png';  //  die ('ERRORE: FILE NON PRESENTE');
+            return 'avatar__default.png';  //  die ('ERRORE: FILE NON PRESENTE');
         }
 
         if ( $_FILES['file']['error'] === 4 ) 
         {
-            return 'avatar-default.png'; // die('immagine non caricata'); 
+            return 'avatar__default.png'; // die('immagine non caricata'); 
         }
         else
         {
@@ -103,7 +103,7 @@ class SingleController extends Controller {
 
             if ( !empty( $Image->getMessage()) ){ // se si è verificato un errore...
               
-                return 'avatar-default.png'; // die('Si è verificato un errore:<br>'.$Image->getMessage());
+                return 'avatar__default.png'; // die('Si è verificato un errore:<br>'.$Image->getMessage());
             }
             // Se il file è stato caricato senza errori restituisce il nuovo nome del file, es.: 5be1c89d2513d3.2
             return $Image->getNewImageName();  
@@ -116,7 +116,7 @@ class SingleController extends Controller {
  * STORE
  * 
  * Il metodo setImage() può restituire o il nome dell'immagine oppure null,
- * se è null allora alla variabile $imageName assegniamo il nome di default: 'avatar-default.png'
+ * se è null allora alla variabile $imageName assegniamo il nome di default: 'avatar__default.png'
  * 
  * In $data(array) assegniamo i valori sanitizzati 
  * di $_POST che sono stati inseriti nel form: es. $_POST['name'], $_POST['country']
@@ -133,7 +133,7 @@ class SingleController extends Controller {
  * @return null
  */
     public function store() {
-        // $imageName = !is_null($this->setImage()) ? $this->setImage() : 'avatar-default.png' ;
+        // $imageName = !is_null($this->setImage()) ? $this->setImage() : 'avatar__default.png' ;
         $imageName = $this->setImage();
 
         $data = filter_var_array($_POST, FILTER_SANITIZE_STRING);

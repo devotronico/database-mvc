@@ -270,7 +270,7 @@ class Single {
 public function updateUser(int $id, array $data=[]){
         
     // CANCELLARE IMMAGINE
-    //$data['imageName'] = !is_null($data['imageName']) ? $data['imageName'] : 'avatar-default.png';
+    //$data['imageName'] = !is_null($data['imageName']) ? $data['imageName'] : 'avatar__default.png';
 
 
     // DATE
@@ -319,7 +319,7 @@ public function updateUser(int $id, array $data=[]){
 ****************************************************************************************/
 public function setImageDefault(int $id){
         
-    $imageName = 'avatar-default.png';
+    $imageName = 'avatar__default.png';
                            
     $sql = "UPDATE users SET img = :img WHERE id = :id";
 
@@ -361,7 +361,7 @@ public function setImageDefault(int $id){
 
             $user = $stmt->fetch(PDO::FETCH_OBJ);
 
-            if ( $user->img != 'avatar-default.png' ) {
+            if ( $user->img != 'avatar__default.png' ) {
 
                 unlink("public/image/avatar/".$user->img);
             }
@@ -389,7 +389,7 @@ public function setImageDefault(int $id){
 
             $user = $stmt->fetch(PDO::FETCH_OBJ);
 
-            if ( $user->img != 'avatar-default.png' ) {
+            if ( $user->img != 'avatar__default.png' ) {
 
                 $filename = "/image/avatar/".$user->img;
 

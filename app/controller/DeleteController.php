@@ -60,7 +60,7 @@ class DeleteController extends Controller {
 
         $this->deleteClass->deleteImage($id); // cancella vecchia immagine
         // $this->deleteClass->setImageDefault($id); // cancella vecchia immagine
-       die('../image/avatar/avatar-default.png');
+       die('../image/avatar/avatar__default.png');
     }
 
 

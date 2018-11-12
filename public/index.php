@@ -34,11 +34,13 @@ $listOfRoutes = [
         "about" => "app\controller\Controller@about",
         "contact" => "app\controller\Controller@contact",
 
-        "" => "app\controller\ListController@page",
-        "/" => "app\controller\ListController@page",
-        "#page/:id" => "app\controller\ListController@page",
-        "load" => "app\controller\ListController@load",
-        "reset" => "app\controller\ListController@reset",
+        "all" => "app\controller\HomeController@all",
+        "" => "app\controller\HomeController@all",
+        "/" => "app\controller\HomeController@all",
+        "load" => "app\controller\HomeController@load",
+        "reset" => "app\controller\HomeController@reset",
+
+        "#page/:id" => "app\controller\PageController@page",
 
         "create" => "app\controller\CreateController@create",
         "#read/:id" => "app\controller\ReadController@read",
@@ -46,6 +48,7 @@ $listOfRoutes = [
         "#delete/:id" => "app\controller\DeleteController@delete",
     ],
     'POST'=>[
+        "search" => "app\controller\HomeController@search",
         "store" => "app\controller\CreateController@store",
         "#edit/:id" => "app\controller\UpdateController@edit",
         '#delete/image/:id' => 'app\controller\DeleteController@deleteImage',
@@ -58,14 +61,16 @@ $listOfRoutes = [
 require_once 'config/db.php';   
 require_once 'core/Router.php';   
 require_once 'app/models/Database.php';   
-require_once 'app/models/Blog.php';   
+require_once 'app/models/Home.php';   
+require_once 'app/models/Page.php';   
 require_once 'app/models/Create.php';   
 require_once 'app/models/Read.php';   
 require_once 'app/models/Update.php';   
 require_once 'app/models/Delete.php';   
 require_once 'app/models/Image.php';   
 require_once 'app/controller/Controller.php';   
-require_once 'app/controller/ListController.php';   
+require_once 'app/controller/HomeController.php';   
+require_once 'app/controller/PageController.php';   
 require_once 'app/controller/CreateController.php';   
 require_once 'app/controller/ReadController.php';   
 require_once 'app/controller/UpdateController.php';   
