@@ -23,7 +23,8 @@
 <div class="form-group">
   <label for="gender">Gender</label>
     <select class="custom-select" id="gender" name="gender">
-      <option selected value="<?=false?>">Gender</option>
+      <option selected value="">Gender</option>
+      <!-- <option selected value="<?=false?>">Gender</option> -->
       <option value="male">Male</option>
       <option value="female">Female</option>
     </select>

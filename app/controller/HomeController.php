@@ -42,6 +42,7 @@ class HomeController extends Controller {
         $users = $this->homeClass->getAllUsers();
     
         $files=['navbar', 'buttons', 'search', 'list'];
+
         $this->template = _view($files, compact('page', 'users'));
     }
 
@@ -62,24 +63,18 @@ class HomeController extends Controller {
 
         $data = filter_var_array($_POST, FILTER_SANITIZE_STRING);
 
-   
-
         $page = 'all';
 
-
         $users = $this->homeClass->getDataFiltered($data);
-    
-    // if ( isset( $users )) { var_dump( $users ); echo '<pre>';print_r( $users ); die(); }
 
         $files=['navbar', 'buttons', 'search', 'list'];
 
-        $this->template = _view($files, compact('page', 'users'));
+        $this->template = _view($files, compact('page','data', 'users'));
     }
 
+    
 
-
-
-
+    
     /**
      * LOAD
      * 

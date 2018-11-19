@@ -89,10 +89,8 @@ class Create {
         // $upddate = date('d-m-Y H:i');  // REG_DATE 
        // $upddate = time(); // 1541839549 
        // $regdate = date('d-m-Y H:i');  // REG_DATE 
-
-
         //$regdate = time(); // 1541839549 
-
+/*
         foreach ( $data as $prop ) {
 
             if ( is_null($data[$prop]) ) {  
@@ -100,7 +98,8 @@ class Create {
                 $data[$prop] = false;
             }
         }
-
+*/
+//if ( isset( $data['gender'] )) { var_dump( $data['gender'] ); echo '<pre>';print_r( $data['gender'] ); die(); }
 
 $sql = 'INSERT INTO users (img, name, gender, birth, fiscalcode,  tel, email, street, cap, city, country, color1, color2, level, look, set_date, upd_date, reg_date, info, cookie) 
 VALUES (:img, :name, :gender, :birth, :fiscalcode, :tel, :email, :street, :cap, :city, :country, :color1, :color2, :level, :look, :set_date, NOW(), NOW(), :info, :cookie)';
@@ -247,12 +246,20 @@ public function setImageDefault(int $id){
 } // chiude classe
 
 
-/**
- * die( $ );
- * die( '' );
- * var_dump( $ );
- * echo '<pre>';print_r( $ );
- * if ( isset( $ )) { var_dump( $ ); echo '<pre>';print_r( $ ); die(); }
+/*
+  die( $ );
+  die( '' );
+  var_dump( $ );
+  echo '<pre>';print_r( $ );
+  if ( isset( $ )) { var_dump( $ ); echo '<pre>';print_r( $ ); die(); }
+ 
+ $test = "";
+if ( is_null( $var )) {$test .= "null, ";}
+if ( isset( $var )) { $test .= "settata, "; }
+if ( !$var ) {$test .= "false, ";} 
+if ( empty( $var )) {$test .= "empty, ";}
+echo $test;
+ 
  */
 
 

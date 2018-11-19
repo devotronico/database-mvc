@@ -9,12 +9,7 @@ class Home {
 
     private $conn;
 
-/*
-    public function __construct(Database $db) {
 
-        $this->conn = $db->getConnection();
-    }
-    */
     public function __construct() {
 
         $db = new Database;
@@ -40,7 +35,7 @@ class Home {
     public function getAllUsers() {
 
 
-        $sql = "SELECT * FROM users";
+        $sql = "SELECT *, TIMESTAMPDIFF(DAY, set_date, CURDATE()) AS days FROM users";
 
         $stmt = $this->conn->query($sql);
         
@@ -49,7 +44,6 @@ class Home {
                
                 $users = $stmt->fetchAll(PDO::FETCH_OBJ); // FETCH_ASSOC |  FETCH_OBJ
              
-
                 return $users; // ritorna un array di oggetti
             } else {
                 die("ERRORE");
@@ -72,25 +66,38 @@ class Home {
 
     public function getDataFiltered(array $data) {
 
-        $data['where'] = $data['where'] === 'where' ? 'name' : $data['where'];
-        $data['orderby'] = $data['orderby'] === 'orderby' ? 'name' : $data['orderby'];
-        $data['direction'] = $data['direction'] === 'direction' ? 'ASC' : $data['direction'];  
-        
-        //echo $data['where']; echo '<br>';
 
-        $sql = "SELECT * FROM `users` WHERE `{$data['where']}` LIKE :keyword ORDER BY `{$data['orderby']}` {$data['direction']}"; 
-        
-        echo $sql;
+        switch ($data['time']) {
+            case 'day':  $data['time'] = 2; break;
+            case 'week': $data['time'] = 8; break;
+            case 'month':$data['time'] = 32; break;
+            case 'year': $data['time'] = 365; break;
+            case 'ever': $data['time'] = 10000; break;
+        }
 
+        if ( empty( $data['keyword'] )) {
+
+            $sql = "SELECT *, TIMESTAMPDIFF(DAY, set_date, CURDATE()) AS days FROM `users` 
+            WHERE TIMESTAMPDIFF(DAY, set_date, CURDATE( )) < :time
+            ORDER BY `{$data['orderby']}` {$data['dir']}"; 
+        } else {
+
+            $sql = "SELECT *, TIMESTAMPDIFF(DAY, set_date, CURDATE()) AS days FROM `users` 
+            WHERE `{$data['where']}` LIKE :keyword AND TIMESTAMPDIFF(DAY, set_date, CURDATE( )) < :time
+            ORDER BY `{$data['orderby']}` {$data['dir']}"; 
+        }
+
+        
+        
         $stmt = $this->conn->prepare($sql);
       
-        $data['keyword'] = "%{$data['keyword']}%";
-        
-        $stmt->bindParam(':keyword', $data['keyword'], PDO::PARAM_STR, 20);
+      //  $data['keyword'] = "%{$data['keyword']}%";
+       // $stmt->bindParam(':keyword', $data['keyword'], PDO::PARAM_STR, 20);
+        $stmt->bindParam(':time', $data['time'], PDO::PARAM_STR, 20);
 
         if ($stmt->execute()) 
         {
-            
+        
             $users = $stmt->fetchAll(PDO::FETCH_OBJ); 
           
             return $users; // ritorna un array di oggetti
@@ -98,6 +105,40 @@ class Home {
             die("ERRORE");
         }
     }
+
+
+    public function getTimeDiff(array $data) {
+
+      //  $sql = "SELECT *,TIMESTAMPDIFF(DAY, set_date, CURDATE()) AS days ,TIMESTAMPDIFF(MONTH, set_date, CURDATE()) AS months, TIMESTAMPDIFF(YEAR, set_date, CURDATE()) AS years FROM users";
+
+        $sql = "SELECT * 
+        ,TIMESTAMPDIFF(DAY, set_date, CURDATE()) AS days ,TIMESTAMPDIFF(MONTH, set_date, CURDATE()) AS months, TIMESTAMPDIFF(YEAR, set_date, CURDATE()) AS years 
+        FROM users WHERE TIMESTAMPDIFF(DAY, set_date, CURDATE( )) < :time ORDER BY level DESC";
+
+        // $sql = "SELECT * FROM users WHERE DATEDIFF(set_date, CURDATE()) > 0";
+
+        $stmt = $this->conn->prepare($sql);
+        
+        //$data['keyword'] = "%{$data['keyword']}%";
+        
+        $stmt->bindParam(':time', $data['time'], PDO::PARAM_STR, 20);
+
+        if ($stmt->execute()) 
+        {
+        
+            $users = $stmt->fetchAll(PDO::FETCH_OBJ); 
+            if ( isset( $users )) {  echo '<pre>';print_r( $users );  }
+
+            return $users; // ritorna un array di oggetti
+        } else {
+            die("ERRORE");
+        }
+
+    }
+
+    // TIMESTAMPDIFF(MONTH, data_nascita, CURDATE( )) AS mesi,
+    // TIMESTAMPDIFF(DAY, data_nascita, CURDATE( )) AS giorni
+
 
 
 
@@ -175,7 +216,7 @@ MySQL comes with the following data types for storing a date or a date/time valu
         //$regdate = date('d-m-Y H:i');
       
         
-        $sql = 'INSERT INTO users (img, name, gender, birth, fiscalcode,  tel, email, street, cap, city, country, color1, color2, level, look, upd_date, reg_date, info) 
+        $sql = 'INSERT INTO users (img, name, gender, birth, fiscalcode, tel, email, street, cap, city, country, color1, color2, level, look, upd_date, reg_date, info) 
                 VALUES (:img, :name, :gender, :birth, :fiscalcode, :tel, :email, :street, :cap, :city, :country, :color1, :color2, :level, :look, NOW(), NOW(), :info)';
         $stmt = $this->conn->prepare($sql); 
 

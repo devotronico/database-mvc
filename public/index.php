@@ -49,6 +49,7 @@ $listOfRoutes = [
     ],
     'POST'=>[
         "search" => "app\controller\HomeController@search",
+        "time" => "app\controller\HomeController@time",
         "store" => "app\controller\CreateController@store",
         "#edit/:id" => "app\controller\UpdateController@edit",
         '#delete/image/:id' => 'app\controller\DeleteController@deleteImage',
