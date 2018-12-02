@@ -1,7 +1,5 @@
 
 
-// ESEMPIO di questo script sta a questo indirizzo https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
-// 
 
 function inputFileImage(input) {
 
@@ -117,6 +115,7 @@ function returnFileSize(number) {
     return 'Le dimensioni del file superano il limite massimo di 0.5 megabytes';
   }
 }
+// ESEMPIO di questo script sta a questo indirizzo https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file 
 //CHIUDE FUNZIONI DI SUPPORTO---------------------------------------
 
 

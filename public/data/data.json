@@ -16,7 +16,7 @@
         "colors": ["red", "yellow"],
         "level": "5",
         "look": "adult",
-        "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        "info": "Lorem ipsum dolor sit amet."
     },
     {
         "img": "avatar__robot.jpg",
@@ -35,7 +35,7 @@
         "colors":["blue", "gray"],
         "level": "25",
         "look": "old",
-        "info": "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+        "info": "Lorem ipsum dolor sit amet."
     },
     {
         "img": "avatar__alien.png",
@@ -54,7 +54,7 @@
         "colors": ["black", "green"],
         "level": "76",
         "look": "young",
-        "info": "Donec dapibus sapien tellus, id sagittis justo volutpat vel. Integer id tellus ac erat gravida viverra."
+        "info": "Lorem ipsum dolor sit amet."
     },
     {
         "img": "avatar__skeleton.png",
@@ -73,7 +73,7 @@
         "colors": ["black", "white"],
         "level": "36",
         "look": "old",
-        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis."
+        "info": "Lorem ipsum dolor sit amet."
     },
     {
         "img": "avatar__unknown.png",
@@ -92,7 +92,7 @@
         "colors": ["transparent", "transparent"],
         "level": "0",
         "look": "old",
-        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis."
+        "info": "Lorem ipsum dolor sit amet."
     },
     {
         "img": "avatar__jessica.jpg",
@@ -111,7 +111,7 @@
         "colors": ["pink", "violet"],
         "level": "69",
         "look": "young",
-        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis."
+        "info": "Lorem ipsum dolor sit amet."
     },
     {
         "img": "avatar__orso.jpg",
@@ -130,7 +130,7 @@
         "colors": ["brown", "orange"],
         "level": "48",
         "look": "adult",
-        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis."
+        "info": "Lorem ipsum dolor sit amet."
     },
     {
         "img": "avatar__broli.jpg",
@@ -149,7 +149,7 @@
         "colors": ["brown", "orange"],
         "level": "48",
         "look": "child",
-        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis."
+        "info": "Lorem ipsum dolor sit amet."
     },
     {
         "img": "avatar__cyborg.png",
@@ -168,7 +168,7 @@
         "colors": ["gray", "purple"],
         "level": "21",
         "look": "old",
-        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis."
+        "info": "Lorem ipsum dolor sit amet."
     },
     {
         "img": "avatar__mummy.png",
@@ -187,7 +187,7 @@
         "colors": ["yellow", "brown"],
         "level": "65",
         "look": "old",
-        "info": "Vivamus eleifend rhoncus feugiat. In lobortis nulla dolor, eget suscipit arcu commodo quis."
+        "info": "Lorem ipsum dolor sit amet."
     }
 ]
 

@@ -15,61 +15,82 @@ class DeleteController extends Controller {
         $this->deleteClass = new Delete;
         
     }
-   
 
 
 
 
-    //-----------------------------------------------------------------------------|
+
+
+
+
     /**
      * DELETE    -- cruD --
      * 
-     * Cancella un solo utente ( una riga della tabella) con tutti i suoi -> 
-     * dati ( tutti i campi della tabella ) che può essere eliminato
+     * Eliminare un user
      * 
+     * Prima di eliminare una riga della tabella user deve essere eliminato il 
+     * file immagine associato a questo user che si trova in: public/image/avatar/nomeImmagine.jpg
      * 
-     * @param int $id:      user ID
+     * Dopo aver eliminato il file immagine cancella l' user ( una riga della tabella) con tutti i suoi 
+     * dati ( tutti i campi della tabella )
+     * 
+     * Se tutto è andato a buon fine veniamo reinderizzati alla home del sito
+     * 
+     * @param int $id: user id
      * @access public
      * @return null
      */
-    public function delete($id) {
+    public function delete(int $id) {
+
+        $this->deleteClass->deleteImage($id); // cancella file immagine
 
         $success = $this->deleteClass->deleteUser($id);
-
-        if ( $success ) {
+    
+        if ( $success ) { // integer
 
             $message = "Utente eliminato con successo";
 
-            _redirect('/', $message);
+           _redirect('/', $message);
         }
-
     }
 
 
 
-    
+
+
+
+
 
 /**
-     * DELETE IMAGE  {AJAX}
-     * 
-     * 
-     * @access public
-     * @return string
-     */
-    public function deleteImage($id) {
+ * DELETE IMAGE  {AJAX} 
+ * la rotta per attivare questo controller e metodo vengono gestiti con javascript per fare una Request al server
+ * il file javascript e il suo percorso sono: public/js/update.js
+ * 
+ * Quando ci si trova nella pagina dove si modificano i valori di un utente ovvero all'indirizzo url.: http://host/update/:n
+ * Questo metodo si attiva se viene premuto il bottone rosso sull' immagine attuale dell' user
+ * la funzione die() ritorna al client il percorso dell' immagine per essere linkata 
+ * nell' attributo src dell' nodo/elemento html <img> 
+ * es.: <img class="profile__img" src="../image/avatar/avatar__default.jpg" alt="avatar personale">
+ * 
+ * @access public
+ * @global string IMAGE_DEFAULT
+ * @param int $id: user id
+ * @return string
+ */
+    public function deleteImage(int $id) {
 
-        $this->deleteClass->deleteImage($id); // cancella vecchia immagine
-        // $this->deleteClass->setImageDefault($id); // cancella vecchia immagine
-       die('../image/avatar/avatar__default.png');
+        $this->deleteClass->deleteImage($id); // cancella file immagine
+      
+        $this->deleteClass->setImageDefault($id); // Setta il nome dell' immagine di default
+
+        die('../image/avatar/'.IMAGE_DEFAULT);
     }
-
-
-
 } // Chiude la Classe
 
 
 
 /**
+ * echo '<br>';
  * die( $ );
  * die( '' );
  * var_dump( $ );

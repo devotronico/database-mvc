@@ -32,9 +32,9 @@ class ReadController extends Controller {
      * 
      * @param int $id:      
      * @access public
-     * @return null
+     * @return void
      */
-    public function read($id) {
+    public function read(int $id) {
 
         $id = intval($id);
 

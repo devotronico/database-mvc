@@ -3,10 +3,11 @@
 <div class="form-row mt-3 justify-content-center align-items-center">
   <!-- SELECT -->
     <div class="col-auto my-1">
-      <label class="mr-sm-2" for="where">Select</label>
+      <label class="mr-sm-2" for="where">Where</label>
       <select class="custom-select mr-sm-2" id="where" name="where">
         <option value="<?=isset($data['where'])?$data['where']:'name'?>"><?=isset($data['where'])?$data['where']:'name'?></option>
         <option value="name">name</option>
+        <option value="level">level</option>
         <option value="birth">birth</option>
         <option value="country">country</option>
       </select>
@@ -40,6 +41,7 @@
       <select class="custom-select mr-sm-2" id="orderby" name="orderby">
       <option value="<?=isset($data['orderby'])?$data['orderby']:'name'?>"><?=isset($data['orderby'])?$data['orderby']:'name'?></option>
         <option value="name">name</option>
+        <option value="level">level</option>
         <option value="country">country</option>
         <option value="birth">birth</option>
         <option value="set_date">set_date</option>
@@ -69,15 +71,19 @@
     </div>
   <!-- END ASC-DESC -->
 
+    <!-- SAVE SEARCH -->
+    <div class="col-auto my-1">
+      <div class="custom-control custom-checkbox mr-sm-2">
+      <br>
+        <input type="checkbox" class="custom-control-input" id="save" name="save">
+        <label class="custom-control-label" for="save">save</label>
+      </div>
+    </div>
+    <!-- END SAVE SEARCH -->
 
       <div class="col-auto my-1">
-        <div class="custom-control custom-checkbox mr-sm-2">
-          <input type="checkbox" class="custom-control-input" id="save" name="save">
-          <label class="custom-control-label" for="save">save</label>
-        </div>
-      </div>
-      <div class="col-auto my-1">
-        <button type="submit" class="btn btn-primary">Search</button>
+        <label class="mr-sm-2" for="search"></label><br>
+        <button type="submit" class="btn btn-primary" id="search">Search <i class="fas fa-search"></i></button>
       </div>
   </div>
 </form>

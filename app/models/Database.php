@@ -1,12 +1,8 @@
 <?php
-
 namespace app\models;
 
 use PDO;
-	/* 
-	*  PDO DATABASE CLASS
-	*  Connects Database Using PDO
-	*/
+
 class Database {
 	private $host = DB_HOST;
 	private $user = DB_USER;
@@ -41,7 +37,4 @@ class Database {
 
 		return $this->conn;
 	}
-	
-
-	
 }

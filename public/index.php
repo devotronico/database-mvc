@@ -29,6 +29,9 @@ chdir(dirname(__DIR__));
 // lista di rotte suddivise per il tipo di richieste al server ('GET', 'POST')
 // a loro volta suddivise in chiavi/rotte(es. "", "/", "home", "blog", "about", "contact") 
 //che attivano le classi con i rispettivi metodi(VALORI) (es. "app\controller\Controller@home")
+
+define("IMAGE_DEFAULT", "avatar__default.jpg");
+
 $listOfRoutes = [
     'GET'=>[
         "about" => "app\controller\Controller@about",
@@ -48,7 +51,7 @@ $listOfRoutes = [
         "#delete/:id" => "app\controller\DeleteController@delete",
     ],
     'POST'=>[
-        "search" => "app\controller\HomeController@search",
+        "search" => "app\controller\SearchController@search",
         "time" => "app\controller\HomeController@time",
         "store" => "app\controller\CreateController@store",
         "#edit/:id" => "app\controller\UpdateController@edit",
@@ -63,6 +66,7 @@ require_once 'config/db.php';
 require_once 'core/Router.php';   
 require_once 'app/models/Database.php';   
 require_once 'app/models/Home.php';   
+require_once 'app/models/Search.php';   
 require_once 'app/models/Page.php';   
 require_once 'app/models/Create.php';   
 require_once 'app/models/Read.php';   
@@ -71,6 +75,7 @@ require_once 'app/models/Delete.php';
 require_once 'app/models/Image.php';   
 require_once 'app/controller/Controller.php';   
 require_once 'app/controller/HomeController.php';   
+require_once 'app/controller/SearchController.php';   
 require_once 'app/controller/PageController.php';   
 require_once 'app/controller/CreateController.php';   
 require_once 'app/controller/ReadController.php';   
@@ -89,6 +94,25 @@ $controller = $router->dispatch();
 
 // e alla fine verrà caricato il template di default dell'intera pagina che sarà lo stesso per tutte le pagine
 $controller->display();
+
+
+
+
+// Search: <i class="fas fa-search"></i>
+// LOAD: <i class="fas fa-download"></i>
+// Create: <i class="fas fa-plus"></i>
+// View : <i class="fas fa-eye"></i>  &#128463;
+// Edit :  <i class="fas fa-pencil-alt"></i>    <i class="far fa-edit"></i>  &#128472;
+// Delete: <i class="far fa-trash-alt"></i>  &#128473;
+
+// Close : <i class="fas fa-times"></i>     <i class="fas fa-times-circle"></i>     <i class="far fa-times-circle"></i>
+//Menu : <i class="fas fa-bars"></i>
+//Settings : <i class="fas fa-cog"></i>     <i class="fas fa-cogs"></i>     <i class="fas fa-sliders-h"></i>
+//Like :  <i class="far fa-thumbs-up"></i>      <i class="fas fa-thumbs-up"></i>
+//Dislike : <i class="far fa-thumbs-down"></i>      <i class="fas fa-thumbs-down"></i>
+
+
+
 
 
 ?>

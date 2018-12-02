@@ -21,20 +21,20 @@ class CreateController extends Controller {
 
 
 
- //-----------------------------------------------------------------------------|
     /**
      * CREATE  {Crud}
      * 
-     * Dalla home cliccando sul bottone 'aggiungi utente' si attiva il metodo di questa
-     * classe che consente di inserire un nuovo utente all'interno del database.
-     * Se l'operazione ha successo si viene indirizzati nella home del sito.
-     *  Crea un nuovo utente all' interno di un form
-     *  `create()`: Carica il template(solo html) del form il cui metodo è POST
-     *  `new()`:    Immagazzina nel database i dati inseriti nei campi di input ->
-     *              del form e riporta l' utente alla pagina della lista degli users
+     * Mostra pagina del form per la creazione di un nuovo user
+     * 
+     * Dalla home cliccando sul bottone 'aggiungi utente' si viene indirizzati 
+     * nella pagina per la creazione di un nuovo user 
+     * la pagina è un form per l'inserimento di dati
+     * 
+     * Attributi del form per l' inserimento dei dati: 
+     * <form action="/store" method="POST" enctype="multipart/form-data">
      * 
      * @access public
-     * @return null
+     * @return void
      */
     public function create() {
 
@@ -53,7 +53,7 @@ class CreateController extends Controller {
  * [2] restituire il nuovo nome per immagazzinarlo nel database
  * 
  * Per Ottenere tutti i valori dell' array $_FILES settare al tag form l'attributo `enctype="multipart/form-data"`
-   $_FILES = [file] => Array( [name] => 30.jpg, [type] => image/jpeg, [tmp_name] => C:\xampp\tmp\php1AA6.tmp, [error] => 0, [size] => 21545 )
+ *  $_FILES = [file] => Array( [name] => 30.jpg, [type] => image/jpeg, [tmp_name] => C:\xampp\tmp\php1AA6.tmp, [error] => 0, [size] => 21545 )
  *
  * I parametri della classe Image sono:
  * scaleType:   tipo di ridimensionamento da applicare all'immagine ==> 'normal'
@@ -70,18 +70,20 @@ class CreateController extends Controller {
  * 0.25 Megabytes(MB) =  250000 Bytes(B)
  * 
  * @access private
- * @author Daniele Manzi
+ * @global array $_FILES
+ * @global string IMAGE_DEFAULT
  * @return string nome dell' immagine
  */
     private function setImage() {
 
         if ( !isset($_FILES) || !isset($_FILES['file']) ) { 
-            return 'avatar__default.png';  //  die ('ERRORE: FILE NON PRESENTE');
+
+            return IMAGE_DEFAULT; //  die ('ERRORE: FILE NON PRESENTE');
         }
 
         if ( $_FILES['file']['error'] === 4 ) 
         {
-            return 'avatar__default.png'; // die('immagine non caricata'); 
+            return IMAGE_DEFAULT;  // die('immagine non caricata'); 
         }
         else
         {
@@ -89,7 +91,7 @@ class CreateController extends Controller {
 
             if ( !empty( $Image->getMessage()) ){ // se si è verificato un errore...
               
-                return 'avatar__default.png'; // die('Si è verificato un errore:<br>'.$Image->getMessage());
+                return IMAGE_DEFAULT; // die('Si è verificato un errore:<br>'.$Image->getMessage());
             }
             // Se il file è stato caricato senza errori restituisce il nuovo nome del file, es.: 5be1c89d2513d3.2
             return $Image->getNewImageName();  
@@ -100,11 +102,17 @@ class CreateController extends Controller {
 /**
  * STORE
  * 
- * Il metodo setImage() può restituire o il nome dell'immagine oppure null,
- * se è null allora alla variabile $imageName assegniamo il nome di default: 'avatar__default.png'
+ * Salva un nuovo user, inserendo tutti i suoi dati nei campi di una nuova riga nella tabella users
+ * 
+ * Il metodo setImage() può restituire:
+ *  se il file immagine è stato caricato e non ci sono errori nel caricamento allora il metodo restituisce un nome per l'immagine
+ *  se il file immagine non è stato caricato o è stato caricato ma ci sono errori nel caricamento restituisce il nome del file immagine di default: avatar__default.jpg
  * 
  * In $data(array) assegniamo i valori sanitizzati 
  * di $_POST che sono stati inseriti nel form: es. $_POST['name'], $_POST['country']
+ * 
+ * se nel form è stato spuntato il campo input con attributo checkbox allora il valore $_POST['cookie'] è settato e
+ * quindi deve essere aggiunto un altro valore di array
  * 
  * Poi aggiungiamo un altro valore di array associativo con il nome dell' immagine
  * es.: ["imageName"=>$imageName]
@@ -114,18 +122,19 @@ class CreateController extends Controller {
  * con il messaggio: "Un Nuovo Utente è stato creato"
  *
  * @access public
- * @author Daniele Manzi
- * @return null
+ * @global array $_POST
+ * @global string IMAGE_DEFAULT
+ * @return void
  */
     public function store() {
-        // $imageName = !is_null($this->setImage()) ? $this->setImage() : 'avatar__default.png' ;
+
         $imageName = $this->setImage();
 
         $data = filter_var_array($_POST, FILTER_SANITIZE_STRING);
 
         if ( !isset( $_POST['cookie'] )) {
 
-            $data = array_merge(array("imageName"=>$imageName, "cookie"=>false), $data); 
+            $data = array_merge(array("imageName"=>$imageName, "cookie"=>'NO'), $data); 
         } else {
 
             $data = array_merge(array("imageName"=>$imageName), $data); 
@@ -160,6 +169,7 @@ class CreateController extends Controller {
 
 
 /**
+ * echo '<br>';
  * die( $ );
  * die( '' );
  * var_dump( $ );

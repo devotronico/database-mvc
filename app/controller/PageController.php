@@ -44,7 +44,7 @@ class PageController extends Controller {
  */
 public function page($currentPage=1){ 
    
-    $totalPosts = $this->pageClass->getTotalPosts();
+    $totalPosts = $this->pageClass->getTotalUsers();
 
     $page = 'home';
 

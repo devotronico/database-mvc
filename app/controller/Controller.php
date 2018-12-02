@@ -7,6 +7,7 @@ class Controller{
 
   
     protected $layout = 'layout/index.tpl.php';
+    // protected $imgDefault = 'avatar__default.jpg';
  
     protected $template;
     //public $page = 'home';

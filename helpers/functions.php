@@ -76,7 +76,7 @@ function _get_time_ago( $time )
   * se viene passato false o niente restituisce una stringa nel formato:  15 hours
   * se viene passato true restituisce una stringa nel formato:  15 hours, 36 minutes, 31 seconds ago
   */
-function _timeago_from_sql_datetime($datetime, $full = false) {
+function _timeago_from_sql_datetime_en($datetime, $full = false) {
     $now = new DateTime;
     $ago = new DateTime($datetime);
     $diff = $now->diff($ago);
@@ -103,4 +103,34 @@ function _timeago_from_sql_datetime($datetime, $full = false) {
 
     if (!$full) $string = array_slice($string, 0, 1);
     return $string ? implode(', ', $string) . ' ago' : 'just now';
+}
+
+function _timeago_from_sql_datetime($datetime, $full = false) {
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
+
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
+
+    $string = array(
+        'y' => 'anni',
+        'm' => 'mesi',
+        'w' => 'settimane',
+        'd' => 'giorni',
+        'h' => 'ore',
+        'i' => 'minuti',
+        's' => 'secondi',
+    );
+
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v;// . ($diff->$k > 1 ? 's' : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
+
+    if (!$full) $string = array_slice($string, 0, 1);
+    return $string ? implode(', ', $string) . ' fa' : 'adesso';
 }

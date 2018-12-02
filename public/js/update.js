@@ -1,19 +1,26 @@
 import{postRequest} from "./modules/request.js";// <--import deve andare prima dell evento 'DOMContentLoaded'
-import{inputFileImage} from "./modules/loadfile.js";// <--import deve andare prima dell evento 'DOMContentLoaded'
+import{inputFileImage} from "./modules/loadfile.js";
 
 
 /**
  * EVENTO CLICK
- * al click sul bottone rosso sull'immagine dell'avatar
- * essendo che il bottone è un elemento html a con 
- * l' attributo href="/delete/image/id"
+ *  
+ * httpRequest
  * 
- * Con preventDefault() blocchiamo il direzionamento verso la rotta /delete/image/id
+ * controller: DeleteController
+ * metodo controller: deleteImage
+ * model: Delete
+ * metodo model: deleteImage
+ * 
+ * al click sul bottone rosso sull'immagine dell'avatar
+ * essendo che il bottone è un elemento html <a> con 
+ * l' attributo href="/delete/image/id"
+ * con preventDefault() blocchiamo il direzionamento verso la rotta /delete/image/id
  * poi assegniamo la rotta alla variabile const pathname
  * 
- * con la funzione da me scritta 'postRequest()'
+ * con la funzione 'postRequest()' facciamo una chiamata httpRequest
  * e come argomento passiamo la rotta che è nella variabile pathname,
- * facciamo una chiamata httpRequest
+ * 
  * 
  */
 document.addEventListener('click', function(event){
@@ -45,7 +52,7 @@ let inputRange = document.getElementById("level");
 let res = document.getElementById("level-result");
 
     inputRange.addEventListener("input", function() {
-    res.innerHTML = "$" + inputRange.value;
+    res.innerHTML = "€" + inputRange.value;
 }, false); 
 
 

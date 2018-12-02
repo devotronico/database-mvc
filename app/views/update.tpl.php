@@ -173,7 +173,7 @@
         <!--  SET DATA -->
         <div class="form-group">
           <label for="set_date">Setting date</label>
-          <input type="datetime-local" class="form-control" id="set_date" name="set_date" value="<?= date('Y-m-d\TH:i', strtotime($user->set_date)) ?>" aria-describedby="set_date">
+          <input type="datetime-local" class="form-control" id="set_date" name="set_date" value="<?= $user->set_date ?>" aria-describedby="set_date">
           <!-- <input type="datetime-local" class="form-control" id="set_date" name="set_date" value="<?php echo date('Y-m-d\TH:i', strtotime($user->set_date)); ?>" aria-describedby="set_date"> -->
         </div>
         <!-- END SET DATA -->

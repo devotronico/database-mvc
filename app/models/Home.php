@@ -27,11 +27,38 @@ class Home {
     * Eseguendo un fetchAll sull' oggetto PDOStatement viene restituita
     * una matrice contenente tutte le righe del set di risultati
     *
-    * @access private
-    * @author Daniele Manzi
-    * @return array di oggetti.
+    * 
+    *
+    * @access public
+    * @return array di oggetti $users
     */
 
+/**
+ * GET ALL USERS
+ * 
+ * l'array  $users contiene al suo interno tutte le righe della tabella users
+ * ogni riga corrisponde a un oggetto stdClass Object 
+ * $users[0] => ( [id] => 0, [name] => 'doe', [age] => 17 )
+ * $users[1] => ( [id] => 1, [name] => 'foo', [age] => 85 )
+ * ...
+ * ogni riga è composta da più valori
+ * 
+ * Per ottenere il valore di $users[5][days]:
+ *  [days] non è presente nella tabella users ma
+ *  viene calcolato con il comando sql: TIMESTAMPDIFF
+ *  funzionamento di TIMESTAMPDIFF: https://www.w3resource.com/mysql/date-and-time-functions/mysql-timestampdiff-function.php
+ *  Calcola il tempo trascorso tra due date e restituisce il suo valore
+ *  Parametro 1: restituisce la differenza tra due date nel tipo di unità scelto (nel nostro caso è DAY, ovvero numeri di giorni) 
+ *    Il tipo di unità sono: FRAC_SECOND (microseconds), SECOND, MINUTE, HOUR, DAY, WEEK, MONTH, QUARTER, or YEAR.<br>
+ *  Parametro 2: la data da cui comincia a contare 
+ *  Parametro 3: la data in cui smette di contare. CURDATE() restituisce la data attuale in formato: 0000-00-00
+ *    I paramametri 2 e 3 possono essere in formato date{es.: 0000-00-00} oppure datetime{es.: 0000-00-00 00:00:00}
+ *    ma vengono sempre considerati datetime in quanto il comando TIMESTAMPDIFF aggiunge al formato date la parte time{00:00:00}
+ *  Con il comando AS days gli diciamo che deve restituire il calcolo nella variabile days
+ *
+ * @access public
+ * @return array di stdClass Object: $users
+ */
     public function getAllUsers() {
 
 
@@ -42,140 +69,39 @@ class Home {
             if ($stmt->execute()) 
             {
                
-                $users = $stmt->fetchAll(PDO::FETCH_OBJ); // FETCH_ASSOC |  FETCH_OBJ
-             
+                $users = $stmt->fetchAll(PDO::FETCH_OBJ); // FETCH_ASSOC | FETCH_OBJ
+                
+                foreach ( $users as $user) {
+                  
+                    $user->birth = $user->birth ? date('d-m-Y', strtotime($user->birth)) : 'assente';
+                    $user->days = !is_null($user->days) ? $user->days : 'assente';
+                    $user->upd_date = _timeago_from_sql_datetime($user->upd_date);
+                }
+
                 return $users; // ritorna un array di oggetti
             } else {
                 die("ERRORE");
             }
     }
 
-  /**
-    * SEARCH
-    * 
-    * Metodo `query()`: (http://php.net/manual/en/pdo.query.php) 
-    * Il metodo `query()` di PDO esegue un'istruzione SQL di tipo SELECT  
-    * e ritorna un oggetto PDOStatement del set di risultati.
-    * Eseguendo un fetchAll sull' oggetto PDOStatement viene restituita
-    * una matrice contenente tutte le righe del set di risultati
-    * passare variabili come valore di colonna: `{$data['column']}`   {$data['column']}   ".$data['column']." 
-    * @access private
-    * @author Daniele Manzi
-    * @return array di oggetti.
-    */
-
-    public function getDataFiltered(array $data) {
-
-
-        switch ($data['time']) {
-            case 'day':  $data['time'] = 2; break;
-            case 'week': $data['time'] = 8; break;
-            case 'month':$data['time'] = 32; break;
-            case 'year': $data['time'] = 365; break;
-            case 'ever': $data['time'] = 10000; break;
-        }
-
-        if ( empty( $data['keyword'] )) {
-
-            $sql = "SELECT *, TIMESTAMPDIFF(DAY, set_date, CURDATE()) AS days FROM `users` 
-            WHERE TIMESTAMPDIFF(DAY, set_date, CURDATE( )) < :time
-            ORDER BY `{$data['orderby']}` {$data['dir']}"; 
-        } else {
-
-            $sql = "SELECT *, TIMESTAMPDIFF(DAY, set_date, CURDATE()) AS days FROM `users` 
-            WHERE `{$data['where']}` LIKE :keyword AND TIMESTAMPDIFF(DAY, set_date, CURDATE( )) < :time
-            ORDER BY `{$data['orderby']}` {$data['dir']}"; 
-        }
-
-        
-        
-        $stmt = $this->conn->prepare($sql);
-      
-      //  $data['keyword'] = "%{$data['keyword']}%";
-       // $stmt->bindParam(':keyword', $data['keyword'], PDO::PARAM_STR, 20);
-        $stmt->bindParam(':time', $data['time'], PDO::PARAM_STR, 20);
-
-        if ($stmt->execute()) 
-        {
-        
-            $users = $stmt->fetchAll(PDO::FETCH_OBJ); 
-          
-            return $users; // ritorna un array di oggetti
-        } else {
-            die("ERRORE");
-        }
-    }
-
-
-    public function getTimeDiff(array $data) {
-
-      //  $sql = "SELECT *,TIMESTAMPDIFF(DAY, set_date, CURDATE()) AS days ,TIMESTAMPDIFF(MONTH, set_date, CURDATE()) AS months, TIMESTAMPDIFF(YEAR, set_date, CURDATE()) AS years FROM users";
-
-        $sql = "SELECT * 
-        ,TIMESTAMPDIFF(DAY, set_date, CURDATE()) AS days ,TIMESTAMPDIFF(MONTH, set_date, CURDATE()) AS months, TIMESTAMPDIFF(YEAR, set_date, CURDATE()) AS years 
-        FROM users WHERE TIMESTAMPDIFF(DAY, set_date, CURDATE( )) < :time ORDER BY level DESC";
-
-        // $sql = "SELECT * FROM users WHERE DATEDIFF(set_date, CURDATE()) > 0";
-
-        $stmt = $this->conn->prepare($sql);
-        
-        //$data['keyword'] = "%{$data['keyword']}%";
-        
-        $stmt->bindParam(':time', $data['time'], PDO::PARAM_STR, 20);
-
-        if ($stmt->execute()) 
-        {
-        
-            $users = $stmt->fetchAll(PDO::FETCH_OBJ); 
-            if ( isset( $users )) {  echo '<pre>';print_r( $users );  }
-
-            return $users; // ritorna un array di oggetti
-        } else {
-            die("ERRORE");
-        }
-
-    }
-
-    // TIMESTAMPDIFF(MONTH, data_nascita, CURDATE( )) AS mesi,
-    // TIMESTAMPDIFF(DAY, data_nascita, CURDATE( )) AS giorni
 
 
 
 
 
 
-// PAGE =========================    
 
-/*******************************************************************************************************|
-* TOTAL POSTS                                                                                           |
-* questo metodo verrà richiamato solo per la pagina posts/blog per creare la paginazione                |
-* Otteniamo il numero totale in assoluto di tutti i post presenti nella tabella 'posts'                 |
-* Lo scopo è quello di calcolare il numero di pagine per i post                                         |
-* es. se abbiamo 30 post e vogliamo che vengano visualizzati 3 post ogni pagina                         |
-* allora faremo 30post / 3 che ci darà 10 pagine. in questo modo potremo fare la paginazione            |
-********************************************************************************************************/
-public function getTotalPosts(){
-    
-    $sql = 'SELECT COUNT(*) FROM users';
-    if ($res = $this->conn->query($sql)) {
-        $rows = $res->fetchColumn();
-        return $rows;
-    }
-}
+   
 
 
 
 
-/*
-MySQL comes with the following data types for storing a date or a date/time value in the database:
 
-    DATE - format YYYY-MM-DD
-    DATETIME - format: YYYY-MM-DD HH:MI:SS
-    TIMESTAMP - format: YYYY-MM-DD HH:MI:SS
-    YEAR - format YYYY or YY
-*/
 
-//---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
     /**
     * LOAD USERS
     * 
@@ -186,7 +112,7 @@ MySQL comes with the following data types for storing a date or a date/time valu
         (
             [0] => Array
                 (
-                    [name] => Balrog
+                    [name] => Rog
                     [birth] => 27-01-1967
                     [move] => Array
                         (
@@ -206,16 +132,10 @@ MySQL comes with the following data types for storing a date or a date/time valu
     */
     public function loadUsers(){
 
-
         $jsondata = file_get_contents('./public/data/data.json');
 
         $datas = json_decode($jsondata, true);
     
-        // DATE
-        //$upddate = time(); // da fixare
-        //$regdate = date('d-m-Y H:i');
-      
-        
         $sql = 'INSERT INTO users (img, name, gender, birth, fiscalcode, tel, email, street, cap, city, country, color1, color2, level, look, upd_date, reg_date, info) 
                 VALUES (:img, :name, :gender, :birth, :fiscalcode, :tel, :email, :street, :cap, :city, :country, :color1, :color2, :level, :look, NOW(), NOW(), :info)';
         $stmt = $this->conn->prepare($sql); 
@@ -234,7 +154,7 @@ MySQL comes with the following data types for storing a date or a date/time valu
             $stmt->bindParam(':street',     $data['address']['street'],    PDO::PARAM_STR, 16);
             $stmt->bindParam(':cap',        $data['address']['cap'],       PDO::PARAM_STR, 16);
             $stmt->bindParam(':city',       $data['address']['city'],      PDO::PARAM_STR, 16);
-            $stmt->bindParam(':country',    $data['address']['country'],   PDO::PARAM_STR, 20);
+            $stmt->bindParam(':country',    $data['address']['country'],   PDO::PARAM_STR, 16);
             $stmt->bindParam(':color1',     $data['colors'][0],   PDO::PARAM_STR, 16);
             $stmt->bindParam(':color2',     $data['colors'][1],   PDO::PARAM_STR, 16);
             $stmt->bindParam(':level',      $data['level'],       PDO::PARAM_STR, 16);
@@ -255,14 +175,16 @@ MySQL comes with the following data types for storing a date or a date/time valu
 
 
 
+
+
+
+
     /**
      * RESET USERS
      * 
      * Svuota il database
      *
-     * @access private
-     * @author Daniele Manzi
-     * @global object GET
+     * @access public
      * @return bool true
      */
     public function resetUsers(){
@@ -285,10 +207,12 @@ MySQL comes with the following data types for storing a date or a date/time valu
 
 
 /*
+echo "<br>";
 die( $ );
 die( '' );
 var_dump( $ );
 echo '<pre>';print_r( $ );
+echo '<pre>';var_dump( $ );
 var_export( $ );
 if ( isset( $users )) { var_dump( $users ); echo '<pre>';print_r( $users ); var_export( $ ); die(); }
 
@@ -322,3 +246,14 @@ echo $test;
  */
 
 
+/*
+    MySQL viene fornito con i seguenti tipi di dati per la memorizzazione di una data o una data / ora nel database:
+    DATE - format YYYY-MM-DD
+    DATETIME - format: YYYY-MM-DD HH:MI:SS
+    TIMESTAMP - format: YYYY-MM-DD HH:MI:SS
+    YEAR - format YYYY or YY
+*/
+
+
+    // TIMESTAMPDIFF(MONTH, data_nascita, CURDATE( )) AS mesi,
+    // TIMESTAMPDIFF(DAY, data_nascita, CURDATE( )) AS giorni

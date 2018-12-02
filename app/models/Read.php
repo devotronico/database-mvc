@@ -50,9 +50,7 @@ class Read {
         
         $user = $stmt->fetch(PDO::FETCH_OBJ); 
 
-        $user->birth = date('d-m-Y', strtotime($user->birth));
-
-        $user->set_date = date('d-m-Y H:i', strtotime($user->set_date));
+        $user->birth = $user->birth ? date('d-m-Y', strtotime($user->birth)) : 'assente';
       
         $user->upd_date = _timeago_from_sql_datetime( $user->upd_date );
         
@@ -61,7 +59,6 @@ class Read {
         $fn = "public/image/avatar/".$user->img;
 
         $user->img = !file_exists( $fn )? $this->setImageDefault($id) : "/image/avatar/".$user->img; ;
-    
     
         return $user;
     }
@@ -75,10 +72,10 @@ class Read {
      * che corrisponde al nome del file salvato nel database
      *
      * Quindi si sostituisce il vecchio nome del file con il nome di default 
-     * che è:  'avatar__default.png'
+     * che è:  'avatar__default.jpg'
      * 
      * poi viene ritornato il nuovo nome più il percorso del file
-     * che è: "/image/avatar/avatar__default.png"
+     * che è: "/image/avatar/avatar__default.jpg"
      * Il file di default è sempre presente in questo percorso
      * perchè l'utente non può cancellarlo
      * 
@@ -86,11 +83,11 @@ class Read {
      * @author Daniele Manzi
      * @global object $conn
      * @param int $id 
-     * @return string /image/avatar/avatar__default.png
+     * @return string /image/avatar/avatar__default.jpg
      */
     private function setImageDefault($id) {
     
-        $imageName = 'avatar__default.png';
+        $imageName = IMAGE_DEFAULT; // avatar__default.jpg
                             
         $sql = "UPDATE users SET img = :img WHERE id = :id";
 
@@ -101,6 +98,7 @@ class Read {
     
         $stmt->execute();
         $stmt = null;
+        
         return "/image/avatar/".$imageName;
     }
 

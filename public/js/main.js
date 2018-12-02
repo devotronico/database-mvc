@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-console.log('0');
 
 
 // window.onbeforeunload
@@ -8,7 +7,7 @@ console.log('0');
 window.onbeforeunload = function () { 
     //prima di caricare una nuova pagina lo scroll viene portato in cima
     window.scrollTo(0, 0);
- //return "Write something clever here...";
+
 }
 
 
@@ -30,7 +29,7 @@ window.onload = downloadJSAtOnload;
 
 
 
-// Al ogni pagina viene caricato un file js specifico
+// A ogni pagina viene caricato un file js specifico
 // PATH DELL URL
 console.log('window.location.pathname = ' + window.location.pathname);
 const pathname = window.location.pathname;
@@ -58,7 +57,7 @@ function downloadJSAtOnload () {
         case 'create':
         case 'update':
             element.setAttribute('type', 'module'); 
-            element.setAttribute('src', '/js/create.js'); 
+            element.setAttribute('src', '/js/update.js'); 
         break;
 
         default : 
